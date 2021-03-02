@@ -7,10 +7,15 @@ import (
 	"github.com/ElrondNetwork/elrond-go/data"
 	"github.com/ElrondNetwork/elrond-go/data/block"
 	"github.com/ElrondNetwork/elrond-go/data/state"
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/data/transaction"
 	"github.com/ElrondNetwork/elrond-go/process"
 	"github.com/ElrondNetwork/elrond-go/sharding"
 	"github.com/ElrondNetwork/elrond-go/vm"
+=======
+	"github.com/ElrondNetwork/elrond-go/process"
+	"github.com/ElrondNetwork/elrond-go/sharding"
+>>>>>>> Stashed changes
 )
 
 var log = logger.DefaultLogger()
@@ -140,6 +145,7 @@ func setBalanceToTrie(
 
 	return account.SetBalanceWithJournal(balance)
 }
+<<<<<<< Updated upstream
 
 func initSystemSmartContracts(
 	accounts state.AccountsAdapter,
@@ -174,3 +180,5 @@ func initSystemSmartContracts(
 
 	return accounts.Commit()
 }
+=======
+>>>>>>> Stashed changes

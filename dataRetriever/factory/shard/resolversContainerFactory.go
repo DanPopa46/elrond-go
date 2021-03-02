@@ -70,6 +70,7 @@ func NewResolversContainerFactory(
 	}, nil
 }
 
+<<<<<<< Updated upstream
 // Create returns a resolver container that will hold all resolvers in the system
 func (rcf *resolversContainerFactory) Create() (dataRetriever.ResolversContainer, error) {
 	container := containers.NewResolversContainer()
@@ -79,6 +80,13 @@ func (rcf *resolversContainerFactory) Create() (dataRetriever.ResolversContainer
 		dataRetriever.TransactionUnit,
 		rcf.dataPools.Transactions(),
 	)
+=======
+// Create returns an interceptor container that will hold all interceptors in the system
+func (rcf *resolversContainerFactory) Create() (dataRetriever.ResolversContainer, error) {
+	container := containers.NewResolversContainer()
+
+	keys, resolverSlice, err := rcf.generateTxResolvers(factory.TransactionTopic, dataRetriever.TransactionUnit, rcf.dataPools.Transactions())
+>>>>>>> Stashed changes
 	if err != nil {
 		return nil, err
 	}
@@ -100,6 +108,7 @@ func (rcf *resolversContainerFactory) Create() (dataRetriever.ResolversContainer
 		return nil, err
 	}
 
+<<<<<<< Updated upstream
 	keys, resolverSlice, err = rcf.generateTxResolvers(
 		factory.RewardsTransactionTopic,
 		dataRetriever.RewardTransactionUnit,
@@ -114,6 +123,8 @@ func (rcf *resolversContainerFactory) Create() (dataRetriever.ResolversContainer
 		return nil, err
 	}
 
+=======
+>>>>>>> Stashed changes
 	keys, resolverSlice, err = rcf.generateHdrResolver()
 	if err != nil {
 		return nil, err
@@ -188,8 +199,13 @@ func (rcf *resolversContainerFactory) generateTxResolvers(
 
 	noOfShards := shardC.NumberOfShards()
 
+<<<<<<< Updated upstream
 	keys := make([]string, noOfShards+1)
 	resolverSlice := make([]dataRetriever.Resolver, noOfShards+1)
+=======
+	keys := make([]string, noOfShards)
+	resolverSlice := make([]dataRetriever.Resolver, noOfShards)
+>>>>>>> Stashed changes
 
 	for idx := uint32(0); idx < noOfShards; idx++ {
 		identifierTx := topic + shardC.CommunicationIdentifier(idx)
@@ -204,6 +220,7 @@ func (rcf *resolversContainerFactory) generateTxResolvers(
 		keys[idx] = identifierTx
 	}
 
+<<<<<<< Updated upstream
 	identifierTx := topic + shardC.CommunicationIdentifier(sharding.MetachainShardId)
 	excludePeersFromTopic := topic + shardC.CommunicationIdentifier(shardC.SelfId())
 
@@ -215,6 +232,8 @@ func (rcf *resolversContainerFactory) generateTxResolvers(
 	resolverSlice[noOfShards] = resolver
 	keys[noOfShards] = identifierTx
 
+=======
+>>>>>>> Stashed changes
 	return keys, resolverSlice, nil
 }
 
@@ -227,7 +246,25 @@ func (rcf *resolversContainerFactory) createTxResolver(
 
 	txStorer := rcf.store.GetStorer(unit)
 
+<<<<<<< Updated upstream
 	resolverSender, err := rcf.createOneResolverSender(topic, excludedTopic)
+=======
+	peerListCreator, err := topicResolverSender.NewDiffPeerListCreator(rcf.messenger, topic, excludedTopic)
+	if err != nil {
+		return nil, err
+	}
+
+	//TODO instantiate topic sender resolver with the shard IDs for which this resolver is supposed to serve the data
+	// this will improve the serving of transactions as the searching will be done only on 2 sharded data units
+	resolverSender, err := topicResolverSender.NewTopicResolverSender(
+		rcf.messenger,
+		topic,
+		peerListCreator,
+		rcf.marshalizer,
+		rcf.intRandomizer,
+		uint32(0),
+	)
+>>>>>>> Stashed changes
 	if err != nil {
 		return nil, err
 	}
@@ -319,8 +356,13 @@ func (rcf *resolversContainerFactory) createTopicHeadersForMetachain() error {
 func (rcf *resolversContainerFactory) generateMiniBlocksResolvers() ([]string, []dataRetriever.Resolver, error) {
 	shardC := rcf.shardCoordinator
 	noOfShards := shardC.NumberOfShards()
+<<<<<<< Updated upstream
 	keys := make([]string, noOfShards+1)
 	resolverSlice := make([]dataRetriever.Resolver, noOfShards+1)
+=======
+	keys := make([]string, noOfShards)
+	resolverSlice := make([]dataRetriever.Resolver, noOfShards)
+>>>>>>> Stashed changes
 
 	for idx := uint32(0); idx < noOfShards; idx++ {
 		identifierMiniBlocks := factory.MiniBlocksTopic + shardC.CommunicationIdentifier(idx)
@@ -335,6 +377,7 @@ func (rcf *resolversContainerFactory) generateMiniBlocksResolvers() ([]string, [
 		keys[idx] = identifierMiniBlocks
 	}
 
+<<<<<<< Updated upstream
 	identifierMiniBlocks := factory.MiniBlocksTopic + shardC.CommunicationIdentifier(sharding.MetachainShardId)
 	excludePeersFromTopic := factory.MiniBlocksTopic + shardC.CommunicationIdentifier(shardC.SelfId())
 
@@ -346,13 +389,31 @@ func (rcf *resolversContainerFactory) generateMiniBlocksResolvers() ([]string, [
 	resolverSlice[noOfShards] = resolver
 	keys[noOfShards] = identifierMiniBlocks
 
+=======
+>>>>>>> Stashed changes
 	return keys, resolverSlice, nil
 }
 
 func (rcf *resolversContainerFactory) createMiniBlocksResolver(topic string, excludedTopic string) (dataRetriever.Resolver, error) {
 	miniBlocksStorer := rcf.store.GetStorer(dataRetriever.MiniBlockUnit)
 
+<<<<<<< Updated upstream
 	resolverSender, err := rcf.createOneResolverSender(topic, excludedTopic)
+=======
+	peerListCreator, err := topicResolverSender.NewDiffPeerListCreator(rcf.messenger, topic, excludedTopic)
+	if err != nil {
+		return nil, err
+	}
+
+	resolverSender, err := topicResolverSender.NewTopicResolverSender(
+		rcf.messenger,
+		topic,
+		peerListCreator,
+		rcf.marshalizer,
+		rcf.intRandomizer,
+		uint32(0),
+	)
+>>>>>>> Stashed changes
 	if err != nil {
 		return nil, err
 	}
@@ -530,6 +591,7 @@ func (rcf *resolversContainerFactory) generateMetablockHeaderResolver() ([]strin
 	return []string{identifierHdr}, []dataRetriever.Resolver{resolver}, nil
 }
 
+<<<<<<< Updated upstream
 func (rcf *resolversContainerFactory) createOneResolverSender(
 	topic string,
 	excludedTopic string,
@@ -557,6 +619,8 @@ func (rcf *resolversContainerFactory) createOneResolverSender(
 	return resolverSender, nil
 }
 
+=======
+>>>>>>> Stashed changes
 // IsInterfaceNil returns true if there is no value under the interface
 func (rcf *resolversContainerFactory) IsInterfaceNil() bool {
 	if rcf == nil {

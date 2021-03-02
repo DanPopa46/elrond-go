@@ -6,28 +6,45 @@ import (
 )
 
 type metaDataPool struct {
+<<<<<<< Updated upstream
 	metaBlocks           storage.Cacher
 	miniBlocks           storage.Cacher
 	shardHeaders         storage.Cacher
 	headersNonces        dataRetriever.Uint64SyncMapCacher
 	transactions         dataRetriever.ShardedDataCacherNotifier
 	unsignedTransactions dataRetriever.ShardedDataCacherNotifier
+=======
+	metaBlocks      storage.Cacher
+	miniBlockHashes dataRetriever.ShardedDataCacherNotifier
+	shardHeaders    storage.Cacher
+	headersNonces   dataRetriever.Uint64SyncMapCacher
+>>>>>>> Stashed changes
 }
 
 // NewMetaDataPool creates a data pools holder object
 func NewMetaDataPool(
 	metaBlocks storage.Cacher,
+<<<<<<< Updated upstream
 	miniBlocks storage.Cacher,
 	shardHeaders storage.Cacher,
 	headersNonces dataRetriever.Uint64SyncMapCacher,
 	transactions dataRetriever.ShardedDataCacherNotifier,
 	unsignedTransactions dataRetriever.ShardedDataCacherNotifier,
+=======
+	miniBlockHashes dataRetriever.ShardedDataCacherNotifier,
+	shardHeaders storage.Cacher,
+	headersNonces dataRetriever.Uint64SyncMapCacher,
+>>>>>>> Stashed changes
 ) (*metaDataPool, error) {
 
 	if metaBlocks == nil || metaBlocks.IsInterfaceNil() {
 		return nil, dataRetriever.ErrNilMetaBlockPool
 	}
+<<<<<<< Updated upstream
 	if miniBlocks == nil || miniBlocks.IsInterfaceNil() {
+=======
+	if miniBlockHashes == nil || miniBlockHashes.IsInterfaceNil() {
+>>>>>>> Stashed changes
 		return nil, dataRetriever.ErrNilMiniBlockHashesPool
 	}
 	if shardHeaders == nil || shardHeaders.IsInterfaceNil() {
@@ -36,6 +53,7 @@ func NewMetaDataPool(
 	if headersNonces == nil || headersNonces.IsInterfaceNil() {
 		return nil, dataRetriever.ErrNilMetaBlockNoncesPool
 	}
+<<<<<<< Updated upstream
 	if transactions == nil || transactions.IsInterfaceNil() {
 		return nil, dataRetriever.ErrNilTxDataPool
 	}
@@ -61,6 +79,25 @@ func (mdp *metaDataPool) MetaBlocks() storage.Cacher {
 // MiniBlocks returns the holder for meta mini block hashes
 func (mdp *metaDataPool) MiniBlocks() storage.Cacher {
 	return mdp.miniBlocks
+=======
+
+	return &metaDataPool{
+		metaBlocks:      metaBlocks,
+		miniBlockHashes: miniBlockHashes,
+		shardHeaders:    shardHeaders,
+		headersNonces:   headersNonces,
+	}, nil
+}
+
+// MetaChainBlocks returns the holder for meta blocks
+func (mdp *metaDataPool) MetaChainBlocks() storage.Cacher {
+	return mdp.metaBlocks
+}
+
+// MiniBlockHashes returns the holder for meta mini block hashes
+func (mdp *metaDataPool) MiniBlockHashes() dataRetriever.ShardedDataCacherNotifier {
+	return mdp.miniBlockHashes
+>>>>>>> Stashed changes
 }
 
 // ShardHeaders returns the holder for shard headers
@@ -74,6 +111,7 @@ func (mdp *metaDataPool) HeadersNonces() dataRetriever.Uint64SyncMapCacher {
 	return mdp.headersNonces
 }
 
+<<<<<<< Updated upstream
 // Transactions returns the holder for transactions which interact with the metachain
 func (mdp *metaDataPool) Transactions() dataRetriever.ShardedDataCacherNotifier {
 	return mdp.transactions
@@ -84,6 +122,8 @@ func (mdp *metaDataPool) UnsignedTransactions() dataRetriever.ShardedDataCacherN
 	return mdp.unsignedTransactions
 }
 
+=======
+>>>>>>> Stashed changes
 // IsInterfaceNil returns true if there is no value under the interface
 func (mdp *metaDataPool) IsInterfaceNil() bool {
 	if mdp == nil {

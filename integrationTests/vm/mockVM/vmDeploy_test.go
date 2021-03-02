@@ -49,7 +49,11 @@ func TestVmDeployWithoutTransferShouldDeploySCCode(t *testing.T) {
 		senderAddressBytes,
 		senderNonce+1,
 		vm.ComputeExpectedBalance(senderBalance, transferOnCalls, gasLimit, gasPrice))
+<<<<<<< Updated upstream
 	destinationAddressBytes, _ := hex.DecodeString("0000000000000000ffff1a2983b179a480a60c4308da48f13b4480dbb4d33132")
+=======
+	destinationAddressBytes, _ := hex.DecodeString("000000000000000000001a2983b179a480a60c4308da48f13b4480dbb4d33132")
+>>>>>>> Stashed changes
 
 	vm.TestDeployedContractContents(
 		t,
@@ -98,7 +102,11 @@ func TestVmDeployWithTransferShouldDeploySCCode(t *testing.T) {
 		senderAddressBytes,
 		senderNonce+1,
 		vm.ComputeExpectedBalance(senderBalance, transferOnCalls, gasLimit, gasPrice))
+<<<<<<< Updated upstream
 	destinationAddressBytes, _ := hex.DecodeString("0000000000000000ffff1a2983b179a480a60c4308da48f13b4480dbb4d33132")
+=======
+	destinationAddressBytes, _ := hex.DecodeString("000000000000000000001a2983b179a480a60c4308da48f13b4480dbb4d33132")
+>>>>>>> Stashed changes
 	vm.TestDeployedContractContents(
 		t,
 		destinationAddressBytes,
@@ -148,7 +156,11 @@ func TestVmDeployWithTransferAndGasShouldDeploySCCode(t *testing.T) {
 		senderNonce+1,
 		vm.ComputeExpectedBalance(senderBalance, transferOnCalls, gasLimit, gasPrice))
 
+<<<<<<< Updated upstream
 	destinationAddressBytes, _ := hex.DecodeString("0000000000000000ffff1a2983b179a480a60c4308da48f13b4480dbb4d33132")
+=======
+	destinationAddressBytes, _ := hex.DecodeString("000000000000000000001a2983b179a480a60c4308da48f13b4480dbb4d33132")
+>>>>>>> Stashed changes
 	vm.TestDeployedContractContents(
 		t,
 		destinationAddressBytes,
@@ -199,7 +211,11 @@ func TestVMDeployWithTransferWithInsufficientGasShouldReturnErr(t *testing.T) {
 		senderNonce+1,
 		//the transfer should get back to the sender as the tx failed
 		vm.ComputeExpectedBalance(senderBalance, big.NewInt(0), gasLimit, gasPrice))
+<<<<<<< Updated upstream
 	destinationAddressBytes, _ := hex.DecodeString("0000000000000000ffff1a2983b179a480a60c4308da48f13b4480dbb4d33132")
+=======
+	destinationAddressBytes, _ := hex.DecodeString("000000000000000000001a2983b179a480a60c4308da48f13b4480dbb4d33132")
+>>>>>>> Stashed changes
 
 	assert.False(t, vm.AccountExists(accnts, destinationAddressBytes))
 }

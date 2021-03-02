@@ -8,7 +8,10 @@ import (
 	"io"
 	"math/big"
 	"net/http"
+<<<<<<< Updated upstream
 	"strconv"
+=======
+>>>>>>> Stashed changes
 	"strings"
 	"time"
 
@@ -17,7 +20,10 @@ import (
 	"github.com/ElrondNetwork/elrond-go/core/statistics"
 	"github.com/ElrondNetwork/elrond-go/data"
 	"github.com/ElrondNetwork/elrond-go/data/block"
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/data/rewardTx"
+=======
+>>>>>>> Stashed changes
 	"github.com/ElrondNetwork/elrond-go/data/smartContractResult"
 	"github.com/ElrondNetwork/elrond-go/data/transaction"
 	"github.com/ElrondNetwork/elrond-go/hashing"
@@ -32,8 +38,11 @@ const txBulkSize = 1000
 const txIndex = "transactions"
 const blockIndex = "blocks"
 const tpsIndex = "tps"
+<<<<<<< Updated upstream
 const validatorsIndex = "validators"
 const roundIndex = "rounds"
+=======
+>>>>>>> Stashed changes
 
 const metachainTpsDocID = "meta"
 const shardTpsDocIDPrefix = "shard"
@@ -53,7 +62,10 @@ type elasticIndexer struct {
 	hasher           hashing.Hasher
 	logger           *logger.Logger
 	options          *Options
+<<<<<<< Updated upstream
 	isNilIndexer     bool
+=======
+>>>>>>> Stashed changes
 }
 
 // NewElasticIndexer creates a new elasticIndexer where the server listens on the url, authentication for the server is
@@ -97,7 +109,10 @@ func NewElasticIndexer(
 		hasher,
 		logger,
 		options,
+<<<<<<< Updated upstream
 		false,
+=======
+>>>>>>> Stashed changes
 	}
 
 	err = indexer.checkAndCreateIndex(blockIndex, timestampMapping())
@@ -115,6 +130,7 @@ func NewElasticIndexer(
 		return nil, err
 	}
 
+<<<<<<< Updated upstream
 	err = indexer.checkAndCreateIndex(validatorsIndex, nil)
 	if err != nil {
 		return nil, err
@@ -125,6 +141,8 @@ func NewElasticIndexer(
 		return nil, err
 	}
 
+=======
+>>>>>>> Stashed changes
 	return indexer, nil
 }
 
@@ -213,9 +231,13 @@ func (ei *elasticIndexer) createIndex(index string, body io.Reader) error {
 func (ei *elasticIndexer) SaveBlock(
 	bodyHandler data.BodyHandler,
 	headerhandler data.HeaderHandler,
+<<<<<<< Updated upstream
 	txPool map[string]data.TransactionHandler,
 	signersIndexes []uint64,
 ) {
+=======
+	txPool map[string]data.TransactionHandler) {
+>>>>>>> Stashed changes
 
 	if headerhandler == nil || headerhandler.IsInterfaceNil() {
 		ei.logger.Warn(ErrNoHeader.Error())
@@ -228,7 +250,11 @@ func (ei *elasticIndexer) SaveBlock(
 		return
 	}
 
+<<<<<<< Updated upstream
 	go ei.saveHeader(headerhandler, signersIndexes)
+=======
+	go ei.saveHeader(headerhandler)
+>>>>>>> Stashed changes
 
 	if len(body) == 0 {
 		ei.logger.Warn(ErrNoMiniblocks.Error())
@@ -240,6 +266,7 @@ func (ei *elasticIndexer) SaveBlock(
 	}
 }
 
+<<<<<<< Updated upstream
 // SaveMetaBlock will index a meta block in elastic search
 func (ei *elasticIndexer) SaveMetaBlock(header data.HeaderHandler, signersIndexes []uint64) {
 	if header == nil || header.IsInterfaceNil() {
@@ -334,6 +361,9 @@ func (ei *elasticIndexer) saveShardValidatorsPubKeys(shardId uint32, shardValida
 }
 
 func (ei *elasticIndexer) getSerializedElasticBlockAndHeaderHash(header data.HeaderHandler, signersIndexes []uint64) ([]byte, []byte) {
+=======
+func (ei *elasticIndexer) getSerializedElasticBlockAndHeaderHash(header data.HeaderHandler) ([]byte, []byte) {
+>>>>>>> Stashed changes
 	h, err := ei.marshalizer.Marshal(header)
 	if err != nil {
 		ei.logger.Warn("could not marshal header")
@@ -342,12 +372,21 @@ func (ei *elasticIndexer) getSerializedElasticBlockAndHeaderHash(header data.Hea
 
 	headerHash := ei.hasher.Compute(string(h))
 	elasticBlock := Block{
+<<<<<<< Updated upstream
 		Nonce:         header.GetNonce(),
 		Round:         header.GetRound(),
 		ShardID:       header.GetShardID(),
 		Hash:          hex.EncodeToString(headerHash),
 		Proposer:      signersIndexes[0],
 		Validators:    signersIndexes,
+=======
+		Nonce:   header.GetNonce(),
+		ShardID: header.GetShardID(),
+		Hash:    hex.EncodeToString(headerHash),
+		// TODO: We should add functionality for proposer and validators
+		Proposer: hex.EncodeToString([]byte("mock proposer")),
+		//Validators: "mock validators",
+>>>>>>> Stashed changes
 		PubKeyBitmap:  hex.EncodeToString(header.GetPubKeysBitmap()),
 		Size:          int64(len(h)),
 		Timestamp:     time.Duration(header.GetTimeStamp()),
@@ -365,10 +404,17 @@ func (ei *elasticIndexer) getSerializedElasticBlockAndHeaderHash(header data.Hea
 	return serializedBlock, headerHash
 }
 
+<<<<<<< Updated upstream
 func (ei *elasticIndexer) saveHeader(header data.HeaderHandler, signersIndexes []uint64) {
 	var buff bytes.Buffer
 
 	serializedBlock, headerHash := ei.getSerializedElasticBlockAndHeaderHash(header, signersIndexes)
+=======
+func (ei *elasticIndexer) saveHeader(header data.HeaderHandler) {
+	var buff bytes.Buffer
+
+	serializedBlock, headerHash := ei.getSerializedElasticBlockAndHeaderHash(header)
+>>>>>>> Stashed changes
 
 	buff.Grow(len(serializedBlock))
 	buff.Write(serializedBlock)
@@ -616,11 +662,14 @@ func getTransactionByType(
 		return buildSmartContractResult(currentSc, txHash, mbHash, blockHash, mb, header)
 	}
 
+<<<<<<< Updated upstream
 	currentReward, ok := tx.(*rewardTx.RewardTx)
 	if ok && currentReward != nil {
 		return buildRewardTransaction(currentReward, txHash, mbHash, blockHash, mb, header)
 	}
 
+=======
+>>>>>>> Stashed changes
 	return nil
 }
 
@@ -638,8 +687,12 @@ func buildTransaction(
 		MBHash:        hex.EncodeToString(mbHash),
 		BlockHash:     hex.EncodeToString(blockHash),
 		Nonce:         tx.Nonce,
+<<<<<<< Updated upstream
 		Round:         header.GetRound(),
 		Value:         tx.Value.String(),
+=======
+		Value:         tx.Value,
+>>>>>>> Stashed changes
 		Receiver:      hex.EncodeToString(tx.RcvAddr),
 		Sender:        hex.EncodeToString(tx.SndAddr),
 		ReceiverShard: mb.ReceiverShardID,
@@ -666,8 +719,12 @@ func buildSmartContractResult(
 		MBHash:        hex.EncodeToString(mbHash),
 		BlockHash:     hex.EncodeToString(blockHash),
 		Nonce:         scr.Nonce,
+<<<<<<< Updated upstream
 		Round:         header.GetRound(),
 		Value:         scr.Value.String(),
+=======
+		Value:         scr.Value,
+>>>>>>> Stashed changes
 		Receiver:      hex.EncodeToString(scr.RcvAddr),
 		Sender:        hex.EncodeToString(scr.SndAddr),
 		ReceiverShard: mb.ReceiverShardID,
@@ -680,6 +737,7 @@ func buildSmartContractResult(
 		Status:        "Success",
 	}
 }
+<<<<<<< Updated upstream
 
 func buildRewardTransaction(
 	rTx *rewardTx.RewardTx,
@@ -711,3 +769,5 @@ func buildRewardTransaction(
 		Status:        "Success",
 	}
 }
+=======
+>>>>>>> Stashed changes

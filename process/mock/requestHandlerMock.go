@@ -3,7 +3,10 @@ package mock
 type RequestHandlerMock struct {
 	RequestTransactionHandlerCalled   func(destShardID uint32, txHashes [][]byte)
 	RequestScrHandlerCalled           func(destShardID uint32, txHashes [][]byte)
+<<<<<<< Updated upstream
 	RequestRewardTxHandlerCalled      func(destShardID uint32, txHashes [][]byte)
+=======
+>>>>>>> Stashed changes
 	RequestMiniBlockHandlerCalled     func(destShardID uint32, miniblockHash []byte)
 	RequestHeaderHandlerCalled        func(destShardID uint32, hash []byte)
 	RequestHeaderHandlerByNonceCalled func(destShardID uint32, nonce uint64)
@@ -23,6 +26,7 @@ func (rrh *RequestHandlerMock) RequestUnsignedTransactions(destShardID uint32, t
 	rrh.RequestScrHandlerCalled(destShardID, txHashes)
 }
 
+<<<<<<< Updated upstream
 func (rrh *RequestHandlerMock) RequestRewardTransactions(destShardID uint32, txHashes [][]byte) {
 	if rrh.RequestRewardTxHandlerCalled == nil {
 		return
@@ -30,6 +34,8 @@ func (rrh *RequestHandlerMock) RequestRewardTransactions(destShardID uint32, txH
 	rrh.RequestRewardTxHandlerCalled(destShardID, txHashes)
 }
 
+=======
+>>>>>>> Stashed changes
 func (rrh *RequestHandlerMock) RequestMiniBlock(shardId uint32, miniblockHash []byte) {
 	if rrh.RequestMiniBlockHandlerCalled == nil {
 		return

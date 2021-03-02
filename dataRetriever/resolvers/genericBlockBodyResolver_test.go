@@ -97,7 +97,11 @@ func TestNewGenericBlockBodyResolver_ProcessReceivedMessageNilValueShouldErr(t *
 		&mock.MarshalizerMock{},
 	)
 
+<<<<<<< Updated upstream
 	err := gbbRes.ProcessReceivedMessage(createRequestMsg(dataRetriever.HashType, nil), nil)
+=======
+	err := gbbRes.ProcessReceivedMessage(createRequestMsg(dataRetriever.HashType, nil))
+>>>>>>> Stashed changes
 	assert.Equal(t, dataRetriever.ErrNilValue, err)
 }
 
@@ -111,7 +115,11 @@ func TestGenericBlockBodyResolver_ProcessReceivedMessageWrongTypeShouldErr(t *te
 		&mock.MarshalizerMock{},
 	)
 
+<<<<<<< Updated upstream
 	err := gbbRes.ProcessReceivedMessage(createRequestMsg(dataRetriever.NonceType, make([]byte, 0)), nil)
+=======
+	err := gbbRes.ProcessReceivedMessage(createRequestMsg(dataRetriever.NonceType, make([]byte, 0)))
+>>>>>>> Stashed changes
 	assert.Equal(t, dataRetriever.ErrInvalidRequestType, err)
 }
 
@@ -153,10 +161,16 @@ func TestGenericBlockBodyResolver_ProcessReceivedMessageFoundInPoolShouldRetValA
 		marshalizer,
 	)
 
+<<<<<<< Updated upstream
 	err := gbbRes.ProcessReceivedMessage(
 		createRequestMsg(dataRetriever.HashArrayType, requestedBuff),
 		nil,
 	)
+=======
+	err := gbbRes.ProcessReceivedMessage(createRequestMsg(
+		dataRetriever.HashArrayType,
+		requestedBuff))
+>>>>>>> Stashed changes
 
 	assert.Nil(t, err)
 	assert.True(t, wasResolved)
@@ -204,10 +218,16 @@ func TestGenericBlockBodyResolver_ProcessReceivedMessageFoundInPoolMarshalizerFa
 		marshalizer,
 	)
 
+<<<<<<< Updated upstream
 	err := gbbRes.ProcessReceivedMessage(
 		createRequestMsg(dataRetriever.HashArrayType, requestedBuff),
 		nil,
 	)
+=======
+	err := gbbRes.ProcessReceivedMessage(createRequestMsg(
+		dataRetriever.HashArrayType,
+		requestedBuff))
+>>>>>>> Stashed changes
 
 	assert.Equal(t, errExpected, err)
 
@@ -249,10 +269,16 @@ func TestGenericBlockBodyResolver_ProcessReceivedMessageNotFoundInPoolShouldRetF
 		marshalizer,
 	)
 
+<<<<<<< Updated upstream
 	err := gbbRes.ProcessReceivedMessage(
 		createRequestMsg(dataRetriever.HashType, requestedBuff),
 		nil,
 	)
+=======
+	err := gbbRes.ProcessReceivedMessage(createRequestMsg(
+		dataRetriever.HashType,
+		requestedBuff))
+>>>>>>> Stashed changes
 
 	assert.Nil(t, err)
 	assert.True(t, wasResolved)
@@ -292,10 +318,16 @@ func TestGenericBlockBodyResolver_ProcessReceivedMessageMissingDataShouldNotSend
 		marshalizer,
 	)
 
+<<<<<<< Updated upstream
 	_ = gbbRes.ProcessReceivedMessage(
 		createRequestMsg(dataRetriever.HashType, requestedBuff),
 		nil,
 	)
+=======
+	_ = gbbRes.ProcessReceivedMessage(createRequestMsg(
+		dataRetriever.HashType,
+		requestedBuff))
+>>>>>>> Stashed changes
 
 	assert.False(t, wasSent)
 }

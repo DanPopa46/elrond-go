@@ -41,7 +41,11 @@ func TestInitializingNetworkwith4Peers(t *testing.T) {
 	expectedAddresses := []string{"/memp2p/Peer1", "/memp2p/Peer2", "/memp2p/Peer3", "/memp2p/Peer4"}
 	assert.Equal(t, expectedAddresses, network.ListAddresses())
 
+<<<<<<< Updated upstream
 	_ = peer1.Close()
+=======
+	peer1.Close()
+>>>>>>> Stashed changes
 	peerIDs := network.PeerIDs()
 	peersMap := network.Peers()
 	assert.Equal(t, 3, len(peerIDs))
@@ -126,14 +130,22 @@ func TestBroadcastingMessages(t *testing.T) {
 	_ = peer4.RegisterMessageProcessor("rocket", mock.NewMockMessageProcessor(peer4.ID()))
 
 	// Send a message to everybody.
+<<<<<<< Updated upstream
 	_ = peer1.BroadcastOnChannelBlocking("rocket", "rocket", []byte("launch the rocket"))
+=======
+	peer1.BroadcastOnChannelBlocking("rocket", "rocket", []byte("launch the rocket"))
+>>>>>>> Stashed changes
 	time.Sleep(1 * time.Second)
 	assert.Equal(t, 4, network.GetMessageCount())
 
 	// Send a message after disconnecting. No new messages should appear in the log.
 	err := peer1.Close()
 	assert.Nil(t, err)
+<<<<<<< Updated upstream
 	_ = peer1.BroadcastOnChannelBlocking("rocket", "rocket", []byte("launch the rocket again"))
+=======
+	peer1.BroadcastOnChannelBlocking("rocket", "rocket", []byte("launch the rocket again"))
+>>>>>>> Stashed changes
 	time.Sleep(1 * time.Second)
 	assert.Equal(t, 4, network.GetMessageCount())
 

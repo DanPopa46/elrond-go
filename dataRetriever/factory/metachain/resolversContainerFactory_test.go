@@ -49,21 +49,31 @@ func createDataPools() dataRetriever.MetaPoolsHolder {
 		ShardHeadersCalled: func() storage.Cacher {
 			return &mock.CacherStub{}
 		},
+<<<<<<< Updated upstream
 		MiniBlocksCalled: func() storage.Cacher {
 			return &mock.CacherStub{}
 		},
 		MetaBlocksCalled: func() storage.Cacher {
+=======
+		MiniBlockHashesCalled: func() dataRetriever.ShardedDataCacherNotifier {
+			return &mock.ShardedDataStub{}
+		},
+		MetaChainBlocksCalled: func() storage.Cacher {
+>>>>>>> Stashed changes
 			return &mock.CacherStub{}
 		},
 		HeadersNoncesCalled: func() dataRetriever.Uint64SyncMapCacher {
 			return &mock.Uint64SyncMapCacherStub{}
 		},
+<<<<<<< Updated upstream
 		TransactionsCalled: func() dataRetriever.ShardedDataCacherNotifier {
 			return &mock.ShardedDataStub{}
 		},
 		UnsignedTransactionsCalled: func() dataRetriever.ShardedDataCacherNotifier {
 			return &mock.ShardedDataStub{}
 		},
+=======
+>>>>>>> Stashed changes
 	}
 
 	return pools
@@ -89,7 +99,10 @@ func TestNewResolversContainerFactory_NilShardCoordinatorShouldErr(t *testing.T)
 		&mock.MarshalizerMock{},
 		createDataPools(),
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, rcf)
@@ -106,7 +119,10 @@ func TestNewResolversContainerFactory_NilMessengerShouldErr(t *testing.T) {
 		&mock.MarshalizerMock{},
 		createDataPools(),
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, rcf)
@@ -123,7 +139,10 @@ func TestNewResolversContainerFactory_NilStoreShouldErr(t *testing.T) {
 		&mock.MarshalizerMock{},
 		createDataPools(),
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, rcf)
@@ -140,7 +159,10 @@ func TestNewResolversContainerFactory_NilMarshalizerShouldErr(t *testing.T) {
 		nil,
 		createDataPools(),
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, rcf)
@@ -157,7 +179,10 @@ func TestNewResolversContainerFactory_NilDataPoolShouldErr(t *testing.T) {
 		&mock.MarshalizerMock{},
 		nil,
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, rcf)
@@ -174,13 +199,17 @@ func TestNewResolversContainerFactory_NilUint64SliceConverterShouldErr(t *testin
 		&mock.MarshalizerMock{},
 		createDataPools(),
 		nil,
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, rcf)
 	assert.Equal(t, dataRetriever.ErrNilUint64ByteSliceConverter, err)
 }
 
+<<<<<<< Updated upstream
 func TestNewResolversContainerFactory_NilDataPackerShouldErr(t *testing.T) {
 	t.Parallel()
 
@@ -198,6 +227,8 @@ func TestNewResolversContainerFactory_NilDataPackerShouldErr(t *testing.T) {
 	assert.Equal(t, dataRetriever.ErrNilDataPacker, err)
 }
 
+=======
+>>>>>>> Stashed changes
 func TestNewResolversContainerFactory_ShouldWork(t *testing.T) {
 	t.Parallel()
 
@@ -208,7 +239,10 @@ func TestNewResolversContainerFactory_ShouldWork(t *testing.T) {
 		&mock.MarshalizerMock{},
 		createDataPools(),
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	assert.NotNil(t, rcf)
@@ -227,7 +261,10 @@ func TestResolversContainerFactory_CreateTopicShardHeadersForMetachainFailsShoul
 		&mock.MarshalizerMock{},
 		createDataPools(),
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	container, err := rcf.Create()
@@ -246,7 +283,10 @@ func TestResolversContainerFactory_CreateRegisterShardHeadersForMetachainFailsSh
 		&mock.MarshalizerMock{},
 		createDataPools(),
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	container, err := rcf.Create()
@@ -265,7 +305,10 @@ func TestResolversContainerFactory_CreateShouldWork(t *testing.T) {
 		&mock.MarshalizerMock{},
 		createDataPools(),
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	container, err := rcf.Create()
@@ -289,17 +332,24 @@ func TestResolversContainerFactory_With4ShardsShouldWork(t *testing.T) {
 		&mock.MarshalizerMock{},
 		createDataPools(),
 		&mock.Uint64ByteSliceConverterMock{},
+<<<<<<< Updated upstream
 		&mock.DataPackerStub{},
+=======
+>>>>>>> Stashed changes
 	)
 
 	container, _ := rcf.Create()
 	numResolversShardHeadersForMetachain := noOfShards
 	numResolverMetablocks := 1
+<<<<<<< Updated upstream
 	numResolversMiniBlocks := noOfShards + 1
 	numResolversUnsigned := noOfShards + 1
 	numResolversTxs := noOfShards + 1
 	totalResolvers := numResolversShardHeadersForMetachain + numResolverMetablocks + numResolversMiniBlocks +
 		numResolversUnsigned + numResolversTxs
+=======
+	totalResolvers := numResolversShardHeadersForMetachain + numResolverMetablocks
+>>>>>>> Stashed changes
 
 	assert.Equal(t, totalResolvers, container.Len())
 }

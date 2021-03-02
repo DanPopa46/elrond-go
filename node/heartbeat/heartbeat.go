@@ -22,12 +22,18 @@ type PubKeyHeartbeat struct {
 	IsActive        bool      `json:"isActive"`
 	ReceivedShardID uint32    `json:"receivedShardID"`
 	ComputedShardID uint32    `json:"computedShardID"`
+<<<<<<< Updated upstream
 	TotalUpTime     int       `json:"totalUpTimeSec"`
 	TotalDownTime   int       `json:"totalDownTimeSec"`
+=======
+	TotalUpTime     Duration  `json:"totalUpTime"`
+	TotalDownTime   Duration  `json:"totalDownTime"`
+>>>>>>> Stashed changes
 	VersionNumber   string    `json:"versionNumber"`
 	IsValidator     bool      `json:"isValidator"`
 	NodeDisplayName string    `json:"nodeDisplayName"`
 }
+<<<<<<< Updated upstream
 
 // HeartbeatDTO is the struct used for handling DB operations for heartbeatMessageInfo struct
 type HeartbeatDTO struct {
@@ -45,3 +51,5 @@ type HeartbeatDTO struct {
 	LastUptimeDowntime          time.Time
 	GenesisTime                 time.Time
 }
+=======
+>>>>>>> Stashed changes

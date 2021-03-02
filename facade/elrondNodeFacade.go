@@ -166,6 +166,16 @@ func (ef *ElrondNodeFacade) GetBalance(address string) (*big.Int, error) {
 	return ef.node.GetBalance(address)
 }
 
+<<<<<<< Updated upstream
+=======
+// GenerateTransaction generates a transaction from a sender, receiver, value and data
+func (ef *ElrondNodeFacade) GenerateTransaction(senderHex string, receiverHex string, value *big.Int,
+	data string) (*transaction.Transaction,
+	error) {
+	return ef.node.GenerateTransaction(senderHex, receiverHex, value, data)
+}
+
+>>>>>>> Stashed changes
 // CreateTransaction creates a transaction from all needed fields
 func (ef *ElrondNodeFacade) CreateTransaction(
 	nonce uint64,
@@ -218,6 +228,31 @@ func (ef *ElrondNodeFacade) GetCurrentPublicKey() string {
 	return ef.node.GetCurrentPublicKey()
 }
 
+<<<<<<< Updated upstream
+=======
+// GenerateAndSendBulkTransactions generates a number of nrTransactions of amount value
+// for the receiver destination
+func (ef *ElrondNodeFacade) GenerateAndSendBulkTransactions(
+	destination string,
+	value *big.Int,
+	nrTransactions uint64,
+) error {
+
+	return ef.node.GenerateAndSendBulkTransactions(destination, value, nrTransactions)
+}
+
+// GenerateAndSendBulkTransactionsOneByOne generates a number of nrTransactions of amount value
+// for the receiver destination in a one by one fashion
+func (ef *ElrondNodeFacade) GenerateAndSendBulkTransactionsOneByOne(
+	destination string,
+	value *big.Int,
+	nrTransactions uint64,
+) error {
+
+	return ef.node.GenerateAndSendBulkTransactionsOneByOne(destination, value, nrTransactions)
+}
+
+>>>>>>> Stashed changes
 // GetHeartbeats returns the heartbeat status for each public key from initial list or later joined to the network
 func (ef *ElrondNodeFacade) GetHeartbeats() ([]heartbeat.PubKeyHeartbeat, error) {
 	hbStatus := ef.node.GetHeartbeats()

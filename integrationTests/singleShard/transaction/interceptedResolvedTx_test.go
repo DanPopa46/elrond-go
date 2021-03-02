@@ -9,7 +9,10 @@ import (
 
 	"github.com/ElrondNetwork/elrond-go/crypto"
 	"github.com/ElrondNetwork/elrond-go/crypto/signing/kyber/singlesig"
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/data/rewardTx"
+=======
+>>>>>>> Stashed changes
 	"github.com/ElrondNetwork/elrond-go/data/transaction"
 	"github.com/ElrondNetwork/elrond-go/integrationTests"
 	"github.com/ElrondNetwork/elrond-go/process"
@@ -52,6 +55,7 @@ func TestNode_RequestInterceptTransactionWithMessenger(t *testing.T) {
 	valMinting := big.NewInt(100000)
 	integrationTests.CreateMintingForSenders([]*integrationTests.TestProcessorNode{nRequester}, 0, []crypto.PrivateKey{nRequester.OwnAccount.SkTxSign}, valMinting)
 	//Step 1. Generate a signed transaction
+<<<<<<< Updated upstream
 	txData := "tx notarized data"
 	//TODO change here when gas limit will no longer be linear with the tx data length
 	txDataCost := uint64(len(txData))
@@ -63,6 +67,14 @@ func TestNode_RequestInterceptTransactionWithMessenger(t *testing.T) {
 		Data:     txData,
 		GasLimit: integrationTests.MinTxGasLimit + txDataCost,
 		GasPrice: integrationTests.MinTxGasPrice,
+=======
+	tx := transaction.Transaction{
+		Nonce:   0,
+		Value:   big.NewInt(0),
+		RcvAddr: integrationTests.TestHasher.Compute("receiver"),
+		SndAddr: buffPk1,
+		Data:    "tx notarized data",
+>>>>>>> Stashed changes
 	}
 
 	txBuff, _ := integrationTests.TestMarshalizer.Marshal(&tx)
@@ -108,6 +120,7 @@ func TestNode_RequestInterceptTransactionWithMessenger(t *testing.T) {
 		assert.Fail(t, "timeout")
 	}
 }
+<<<<<<< Updated upstream
 
 func TestNode_RequestInterceptRewardTransactionWithMessenger(t *testing.T) {
 	if testing.Short() {
@@ -188,3 +201,5 @@ func TestNode_RequestInterceptRewardTransactionWithMessenger(t *testing.T) {
 		assert.Fail(t, "timeout")
 	}
 }
+=======
+>>>>>>> Stashed changes

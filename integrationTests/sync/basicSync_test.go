@@ -6,13 +6,22 @@ import (
 	"testing"
 	"time"
 
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/core"
 	"github.com/ElrondNetwork/elrond-go/data"
+=======
+>>>>>>> Stashed changes
 	"github.com/ElrondNetwork/elrond-go/integrationTests"
 	"github.com/ElrondNetwork/elrond-go/sharding"
 	"github.com/stretchr/testify/assert"
 )
 
+<<<<<<< Updated upstream
+=======
+var stepDelay = time.Second
+var delayP2pBootstrap = time.Second * 2
+
+>>>>>>> Stashed changes
 func TestSyncWorksInShard_EmptyBlocksNoForks(t *testing.T) {
 	if testing.Short() {
 		t.Skip("this is not a short test")
@@ -73,6 +82,7 @@ func TestSyncWorksInShard_EmptyBlocksNoForks(t *testing.T) {
 	for i := 0; i < numRoundsToTest; i++ {
 		integrationTests.ProposeBlock(nodes, idxProposers, round, nonce)
 
+<<<<<<< Updated upstream
 		time.Sleep(stepSync)
 
 		round = integrationTests.IncrementAndPrintRound(round)
@@ -137,12 +147,16 @@ func TestSyncWorksInShard_EmptyBlocksDoubleSign(t *testing.T) {
 		integrationTests.ProposeBlock(nodes, idxProposers, round, nonce)
 
 		time.Sleep(stepSync)
+=======
+		time.Sleep(stepDelay)
+>>>>>>> Stashed changes
 
 		round = integrationTests.IncrementAndPrintRound(round)
 		updateRound(nodes, round)
 		nonce++
 	}
 
+<<<<<<< Updated upstream
 	time.Sleep(stepSync)
 
 	pubKeysVariant1 := []byte{3}
@@ -168,6 +182,11 @@ func proposeBlockWithPubKeyBitmap(n *integrationTests.TestProcessorNode, round u
 	header.SetPubKeysBitmap(pubKeys)
 	n.BroadcastBlock(body, header)
 	n.CommitBlock(body, header)
+=======
+	time.Sleep(stepDelay)
+
+	testAllNodesHaveTheSameBlockHeightInBlockchain(t, nodes)
+>>>>>>> Stashed changes
 }
 
 func testAllNodesHaveTheSameBlockHeightInBlockchain(t *testing.T, nodes []*integrationTests.TestProcessorNode) {
@@ -181,6 +200,7 @@ func testAllNodesHaveTheSameBlockHeightInBlockchain(t *testing.T, nodes []*integ
 	}
 }
 
+<<<<<<< Updated upstream
 func testAllNodesHaveSameLastBlock(t *testing.T, nodes []*integrationTests.TestProcessorNode) {
 	mapBlocksByHash := make(map[string]data.HeaderHandler)
 
@@ -192,4 +212,10 @@ func testAllNodesHaveSameLastBlock(t *testing.T, nodes []*integrationTests.TestP
 	}
 
 	assert.Equal(t, 1, len(mapBlocksByHash))
+=======
+func updateRound(nodes []*integrationTests.TestProcessorNode, round uint64) {
+	for _, n := range nodes {
+		n.Rounder.IndexField = int64(round)
+	}
+>>>>>>> Stashed changes
 }

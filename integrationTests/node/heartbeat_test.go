@@ -3,8 +3,11 @@ package node
 import (
 	"context"
 	"encoding/hex"
+<<<<<<< Updated upstream
 	"encoding/json"
 	"errors"
+=======
+>>>>>>> Stashed changes
 	"fmt"
 	"testing"
 	"time"
@@ -15,7 +18,10 @@ import (
 	"github.com/ElrondNetwork/elrond-go/crypto/signing/kyber/singlesig"
 	"github.com/ElrondNetwork/elrond-go/integrationTests"
 	"github.com/ElrondNetwork/elrond-go/node/heartbeat"
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/node/mock"
+=======
+>>>>>>> Stashed changes
 	"github.com/ElrondNetwork/elrond-go/p2p"
 	"github.com/ElrondNetwork/elrond-go/sharding"
 	"github.com/stretchr/testify/assert"
@@ -162,6 +168,7 @@ func createSender(messenger p2p.Messenger, topic string) (*heartbeat.Sender, cry
 }
 
 func createMonitor(maxDurationPeerUnresponsive time.Duration) *heartbeat.Monitor {
+<<<<<<< Updated upstream
 
 	monitor, _ := heartbeat.NewMonitor(
 		integrationTests.TestMarshalizer,
@@ -193,6 +200,18 @@ func createMonitor(maxDurationPeerUnresponsive time.Duration) *heartbeat.Monitor
 			},
 		},
 		&heartbeat.RealTimer{},
+=======
+	suite := kyber.NewBlakeSHA256Ed25519()
+	signer := &singlesig.SchnorrSigner{}
+	keyGen := signing.NewKeyGenerator(suite)
+
+	monitor, _ := heartbeat.NewMonitor(
+		signer,
+		keyGen,
+		integrationTests.TestMarshalizer,
+		maxDurationPeerUnresponsive,
+		map[uint32][]string{0: {""}},
+>>>>>>> Stashed changes
 	)
 
 	return monitor

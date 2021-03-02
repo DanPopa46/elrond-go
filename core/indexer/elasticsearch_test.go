@@ -267,9 +267,14 @@ func TestNewElasticIndexerIncorrectUrl(t *testing.T) {
 func TestElasticIndexer_getSerializedElasticBlockAndHeaderHash(t *testing.T) {
 	ei := indexer.NewTestElasticIndexer(url, username, password, shardCoordinator, marshalizer, hasher, log, &indexer.Options{})
 	header := newTestBlockHeader()
+<<<<<<< Updated upstream
 	signersIndexes := []uint64{0, 1, 2, 3}
 
 	serializedBlock, headerHash := ei.GetSerializedElasticBlockAndHeaderHash(header, signersIndexes)
+=======
+
+	serializedBlock, headerHash := ei.GetSerializedElasticBlockAndHeaderHash(header)
+>>>>>>> Stashed changes
 
 	h, _ := marshalizer.Marshal(header)
 	expectedHeaderHash := hasher.Compute(string(h))
@@ -277,11 +282,17 @@ func TestElasticIndexer_getSerializedElasticBlockAndHeaderHash(t *testing.T) {
 
 	elasticBlock := indexer.Block{
 		Nonce:         header.Nonce,
+<<<<<<< Updated upstream
 		Round:         header.Round,
 		ShardID:       header.ShardId,
 		Hash:          hex.EncodeToString(headerHash),
 		Proposer:      signersIndexes[0],
 		Validators:    signersIndexes,
+=======
+		ShardID:       header.ShardId,
+		Hash:          hex.EncodeToString(headerHash),
+		Proposer:      hex.EncodeToString([]byte("mock proposer")),
+>>>>>>> Stashed changes
 		PubKeyBitmap:  hex.EncodeToString(header.PubKeysBitmap),
 		Size:          int64(len(h)),
 		Timestamp:     time.Duration(header.TimeStamp),

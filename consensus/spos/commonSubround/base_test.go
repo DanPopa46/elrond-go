@@ -115,3 +115,9 @@ func getSubroundName(subroundId int) string {
 // executeStoredMessages tries to execute all the messages received which are valid for execution
 func executeStoredMessages() {
 }
+<<<<<<< Updated upstream
+=======
+
+func broadcastUnnotarisedBlocks() {
+}
+>>>>>>> Stashed changes

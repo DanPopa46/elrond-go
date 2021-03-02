@@ -11,7 +11,10 @@ type PoolsHolderStub struct {
 	PeerChangesBlocksCalled    func() storage.Cacher
 	TransactionsCalled         func() dataRetriever.ShardedDataCacherNotifier
 	UnsignedTransactionsCalled func() dataRetriever.ShardedDataCacherNotifier
+<<<<<<< Updated upstream
 	RewardTransactionsCalled   func() dataRetriever.ShardedDataCacherNotifier
+=======
+>>>>>>> Stashed changes
 	MiniBlocksCalled           func() storage.Cacher
 	MetaBlocksCalled           func() storage.Cacher
 	MetaHeadersNoncesCalled    func() dataRetriever.Uint64SyncMapCacher
@@ -49,10 +52,13 @@ func (phs *PoolsHolderStub) UnsignedTransactions() dataRetriever.ShardedDataCach
 	return phs.UnsignedTransactionsCalled()
 }
 
+<<<<<<< Updated upstream
 func (phs *PoolsHolderStub) RewardTransactions() dataRetriever.ShardedDataCacherNotifier {
 	return phs.RewardTransactionsCalled()
 }
 
+=======
+>>>>>>> Stashed changes
 // IsInterfaceNil returns true if there is no value under the interface
 func (phs *PoolsHolderStub) IsInterfaceNil() bool {
 	if phs == nil {

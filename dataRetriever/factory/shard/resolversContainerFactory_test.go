@@ -69,9 +69,12 @@ func createDataPools() dataRetriever.PoolsHolder {
 	pools.UnsignedTransactionsCalled = func() dataRetriever.ShardedDataCacherNotifier {
 		return &mock.ShardedDataStub{}
 	}
+<<<<<<< Updated upstream
 	pools.RewardTransactionsCalled = func() dataRetriever.ShardedDataCacherNotifier {
 		return &mock.ShardedDataStub{}
 	}
+=======
+>>>>>>> Stashed changes
 
 	return pools
 }
@@ -416,16 +419,27 @@ func TestResolversContainerFactory_With4ShardsShouldWork(t *testing.T) {
 
 	container, _ := rcf.Create()
 
+<<<<<<< Updated upstream
 	numResolverSCRs := noOfShards + 1
 	numResolverTxs := noOfShards + 1
 	numResolverRewardTxs := noOfShards + 1
 	numResolverHeaders := 1
 	numResolverMiniBlocks := noOfShards + 1
+=======
+	numResolverSCRs := noOfShards
+	numResolverTxs := noOfShards
+	numResolverHeaders := 1
+	numResolverMiniBlocks := noOfShards
+>>>>>>> Stashed changes
 	numResolverPeerChanges := 1
 	numResolverMetachainShardHeaders := 1
 	numResolverMetaBlockHeaders := 1
 	totalResolvers := numResolverTxs + numResolverHeaders + numResolverMiniBlocks + numResolverPeerChanges +
+<<<<<<< Updated upstream
 		numResolverMetachainShardHeaders + numResolverMetaBlockHeaders + numResolverSCRs + numResolverRewardTxs
+=======
+		numResolverMetachainShardHeaders + numResolverMetaBlockHeaders + numResolverSCRs
+>>>>>>> Stashed changes
 
 	assert.Equal(t, totalResolvers, container.Len())
 }

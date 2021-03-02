@@ -6,7 +6,10 @@ import (
 	"github.com/ElrondNetwork/elrond-go/consensus/spos"
 	"github.com/ElrondNetwork/elrond-go/consensus/spos/commonSubround"
 	"github.com/ElrondNetwork/elrond-go/core"
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/core/indexer"
+=======
+>>>>>>> Stashed changes
 	"github.com/ElrondNetwork/elrond-go/statusHandler"
 )
 
@@ -18,7 +21,10 @@ type factory struct {
 	worker         spos.WorkerHandler
 
 	appStatusHandler core.AppStatusHandler
+<<<<<<< Updated upstream
 	indexer          indexer.Indexer
+=======
+>>>>>>> Stashed changes
 }
 
 // NewSubroundsFactory creates a new factory for BN subrounds
@@ -69,7 +75,11 @@ func checkNewFactoryParams(
 	return nil
 }
 
+<<<<<<< Updated upstream
 // SetAppStatusHandler method will update the value of the factory's appStatusHandler
+=======
+// SetAppStatusHandler method set appStatusHandler
+>>>>>>> Stashed changes
 func (fct *factory) SetAppStatusHandler(ash core.AppStatusHandler) error {
 	if ash == nil || ash.IsInterfaceNil() {
 		return spos.ErrNilAppStatusHandler
@@ -79,11 +89,14 @@ func (fct *factory) SetAppStatusHandler(ash core.AppStatusHandler) error {
 	return nil
 }
 
+<<<<<<< Updated upstream
 // SetIndexer method will update the value of the factory's indexer
 func (fct *factory) SetIndexer(indexer indexer.Indexer) {
 	fct.indexer = indexer
 }
 
+=======
+>>>>>>> Stashed changes
 // GenerateSubrounds will generate the subrounds used in Belare & Naveen Cns
 func (fct *factory) GenerateSubrounds() error {
 	fct.initConsensusThreshold()
@@ -156,6 +169,10 @@ func (fct *factory) generateStartRoundSubround() error {
 		processingThresholdPercent,
 		getSubroundName,
 		fct.worker.ExecuteStoredMessages,
+<<<<<<< Updated upstream
+=======
+		fct.worker.BroadcastUnnotarisedBlocks,
+>>>>>>> Stashed changes
 	)
 
 	if err != nil {
@@ -167,8 +184,11 @@ func (fct *factory) generateStartRoundSubround() error {
 		return err
 	}
 
+<<<<<<< Updated upstream
 	subroundStartRound.SetIndexer(fct.indexer)
 
+=======
+>>>>>>> Stashed changes
 	fct.consensusCore.Chronology().AddSubround(subroundStartRound)
 
 	return nil

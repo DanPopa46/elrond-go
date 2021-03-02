@@ -544,6 +544,7 @@ func TestWithShardCoordinator_ShouldWork(t *testing.T) {
 	assert.Nil(t, err)
 }
 
+<<<<<<< Updated upstream
 func TestWithNodesCoordinator_NilNodesCoordinatorShouldErr(t *testing.T) {
 	t.Parallel()
 
@@ -570,6 +571,8 @@ func TestWithNodesCoordinator_ShouldWork(t *testing.T) {
 	assert.Nil(t, err)
 }
 
+=======
+>>>>>>> Stashed changes
 func TestWithUint64ByteSliceConverter_NilConverterShouldErr(t *testing.T) {
 	t.Parallel()
 
@@ -789,6 +792,7 @@ func TestWithAppStatusHandler_OkAshShouldPass(t *testing.T) {
 	assert.IsType(t, &statusHandler.NilStatusHandler{}, node.appStatusHandler)
 	assert.Nil(t, err)
 }
+<<<<<<< Updated upstream
 
 func TestWithIndexer_ShouldWork(t *testing.T) {
 	t.Parallel()
@@ -802,3 +806,5 @@ func TestWithIndexer_ShouldWork(t *testing.T) {
 	assert.Equal(t, indexer, node.indexer)
 	assert.Nil(t, err)
 }
+=======
+>>>>>>> Stashed changes

@@ -13,7 +13,11 @@ import (
 func TestNode_GetAccountAccountDoesNotExistsShouldRetEmpty(t *testing.T) {
 	t.Parallel()
 
+<<<<<<< Updated upstream
 	accDB, _, _ := integrationTests.CreateAccountsDB(0)
+=======
+	accDB, _, _ := integrationTests.CreateAccountsDB(nil)
+>>>>>>> Stashed changes
 
 	n, _ := node.NewNode(
 		node.WithAccountsAdapter(accDB),
@@ -32,7 +36,11 @@ func TestNode_GetAccountAccountDoesNotExistsShouldRetEmpty(t *testing.T) {
 func TestNode_GetAccountAccountExistsShouldReturn(t *testing.T) {
 	t.Parallel()
 
+<<<<<<< Updated upstream
 	accDB, _, _ := integrationTests.CreateAccountsDB(0)
+=======
+	accDB, _, _ := integrationTests.CreateAccountsDB(nil)
+>>>>>>> Stashed changes
 
 	addressHex := integrationTests.CreateRandomHexString(64)
 	addressBytes, _ := hex.DecodeString(addressHex)

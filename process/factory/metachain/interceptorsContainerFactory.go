@@ -1,15 +1,21 @@
 package metachain
 
 import (
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/core/check"
 	"github.com/ElrondNetwork/elrond-go/core/statistics"
 	"github.com/ElrondNetwork/elrond-go/core/throttler"
 	"github.com/ElrondNetwork/elrond-go/crypto"
 	"github.com/ElrondNetwork/elrond-go/data/state"
+=======
+	"github.com/ElrondNetwork/elrond-go/core/statistics"
+	"github.com/ElrondNetwork/elrond-go/crypto"
+>>>>>>> Stashed changes
 	"github.com/ElrondNetwork/elrond-go/dataRetriever"
 	"github.com/ElrondNetwork/elrond-go/hashing"
 	"github.com/ElrondNetwork/elrond-go/marshal"
 	"github.com/ElrondNetwork/elrond-go/process"
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/process/dataValidators"
 	"github.com/ElrondNetwork/elrond-go/process/factory"
 	"github.com/ElrondNetwork/elrond-go/process/factory/containers"
@@ -41,18 +47,41 @@ type interceptorsContainerFactory struct {
 	tpsBenchmark           *statistics.TpsBenchmark
 	argInterceptorFactory  *interceptorFactory.ArgInterceptedDataFactory
 	globalThrottler        process.InterceptorThrottler
+=======
+	"github.com/ElrondNetwork/elrond-go/process/block/interceptors"
+	"github.com/ElrondNetwork/elrond-go/process/dataValidators"
+	"github.com/ElrondNetwork/elrond-go/process/factory"
+	"github.com/ElrondNetwork/elrond-go/process/factory/containers"
+	"github.com/ElrondNetwork/elrond-go/sharding"
+)
+
+type interceptorsContainerFactory struct {
+	marshalizer         marshal.Marshalizer
+	hasher              hashing.Hasher
+	store               dataRetriever.StorageService
+	dataPool            dataRetriever.MetaPoolsHolder
+	shardCoordinator    sharding.Coordinator
+	messenger           process.TopicHandler
+	multiSigner         crypto.MultiSigner
+	chronologyValidator process.ChronologyValidator
+	tpsBenchmark        *statistics.TpsBenchmark
+>>>>>>> Stashed changes
 }
 
 // NewInterceptorsContainerFactory is responsible for creating a new interceptors factory object
 func NewInterceptorsContainerFactory(
 	shardCoordinator sharding.Coordinator,
+<<<<<<< Updated upstream
 	nodesCoordinator sharding.NodesCoordinator,
+=======
+>>>>>>> Stashed changes
 	messenger process.TopicHandler,
 	store dataRetriever.StorageService,
 	marshalizer marshal.Marshalizer,
 	hasher hashing.Hasher,
 	multiSigner crypto.MultiSigner,
 	dataPool dataRetriever.MetaPoolsHolder,
+<<<<<<< Updated upstream
 	accounts state.AccountsAdapter,
 	addrConverter state.AddressConverter,
 	singleSigner crypto.SingleSigner,
@@ -134,6 +163,46 @@ func NewInterceptorsContainerFactory(
 	}
 
 	return icf, nil
+=======
+	chronologyValidator process.ChronologyValidator,
+) (*interceptorsContainerFactory, error) {
+
+	if shardCoordinator == nil || shardCoordinator.IsInterfaceNil() {
+		return nil, process.ErrNilShardCoordinator
+	}
+	if messenger == nil {
+		return nil, process.ErrNilMessenger
+	}
+	if store == nil || store.IsInterfaceNil() {
+		return nil, process.ErrNilStore
+	}
+	if marshalizer == nil || marshalizer.IsInterfaceNil() {
+		return nil, process.ErrNilMarshalizer
+	}
+	if hasher == nil || hasher.IsInterfaceNil() {
+		return nil, process.ErrNilHasher
+	}
+	if multiSigner == nil || multiSigner.IsInterfaceNil() {
+		return nil, process.ErrNilMultiSigVerifier
+	}
+	if dataPool == nil || dataPool.IsInterfaceNil() {
+		return nil, process.ErrNilDataPoolHolder
+	}
+	if chronologyValidator == nil || chronologyValidator.IsInterfaceNil() {
+		return nil, process.ErrNilChronologyValidator
+	}
+
+	return &interceptorsContainerFactory{
+		shardCoordinator:    shardCoordinator,
+		messenger:           messenger,
+		store:               store,
+		marshalizer:         marshalizer,
+		hasher:              hasher,
+		multiSigner:         multiSigner,
+		dataPool:            dataPool,
+		chronologyValidator: chronologyValidator,
+	}, nil
+>>>>>>> Stashed changes
 }
 
 // Create returns an interceptor container that will hold all interceptors in the system
@@ -158,6 +227,7 @@ func (icf *interceptorsContainerFactory) Create() (process.InterceptorsContainer
 		return nil, err
 	}
 
+<<<<<<< Updated upstream
 	keys, interceptorSlice, err = icf.generateTxInterceptors()
 	if err != nil {
 		return nil, err
@@ -176,6 +246,8 @@ func (icf *interceptorsContainerFactory) Create() (process.InterceptorsContainer
 		return nil, err
 	}
 
+=======
+>>>>>>> Stashed changes
 	return container, nil
 }
 
@@ -205,6 +277,7 @@ func (icf *interceptorsContainerFactory) generateMetablockInterceptor() ([]strin
 		return nil, nil, err
 	}
 
+<<<<<<< Updated upstream
 	hdrFactory, err := interceptorFactory.NewMetaInterceptedDataFactory(
 		icf.argInterceptorFactory,
 		interceptorFactory.InterceptedMetaHeader,
@@ -228,6 +301,17 @@ func (icf *interceptorsContainerFactory) generateMetablockInterceptor() ([]strin
 		hdrFactory,
 		hdrProcessor,
 		icf.globalThrottler,
+=======
+	interceptor, err := interceptors.NewMetachainHeaderInterceptor(
+		icf.marshalizer,
+		icf.dataPool.MetaChainBlocks(),
+		icf.dataPool.HeadersNonces(),
+		hdrValidator,
+		icf.multiSigner,
+		icf.hasher,
+		icf.shardCoordinator,
+		icf.chronologyValidator,
+>>>>>>> Stashed changes
 	)
 	if err != nil {
 		return nil, nil, err
@@ -264,7 +348,11 @@ func (icf *interceptorsContainerFactory) generateShardHeaderInterceptors() ([]st
 	return keys, interceptorSlice, nil
 }
 
+<<<<<<< Updated upstream
 func (icf *interceptorsContainerFactory) createOneShardHeaderInterceptor(topic string) (process.Interceptor, error) {
+=======
+func (icf *interceptorsContainerFactory) createOneShardHeaderInterceptor(identifier string) (process.Interceptor, error) {
+>>>>>>> Stashed changes
 	//TODO implement other HeaderHandlerProcessValidator that will check the header's nonce
 	// against blockchain's latest nonce - k finality
 	hdrValidator, err := dataValidators.NewNilHeaderValidator()
@@ -272,6 +360,7 @@ func (icf *interceptorsContainerFactory) createOneShardHeaderInterceptor(topic s
 		return nil, err
 	}
 
+<<<<<<< Updated upstream
 	hdrFactory, err := interceptorFactory.NewMetaInterceptedDataFactory(
 		icf.argInterceptorFactory,
 		interceptorFactory.InterceptedShardHeader,
@@ -430,12 +519,27 @@ func (icf *interceptorsContainerFactory) createOneMiniBlocksInterceptor(topic st
 		txFactory,
 		txBlockBodyProcessor,
 		icf.globalThrottler,
+=======
+	interceptor, err := interceptors.NewHeaderInterceptor(
+		icf.marshalizer,
+		icf.dataPool.ShardHeaders(),
+		icf.dataPool.HeadersNonces(),
+		hdrValidator,
+		icf.multiSigner,
+		icf.hasher,
+		icf.shardCoordinator,
+		icf.chronologyValidator,
+>>>>>>> Stashed changes
 	)
 	if err != nil {
 		return nil, err
 	}
 
+<<<<<<< Updated upstream
 	return icf.createTopicAndAssignHandler(topic, interceptor, true)
+=======
+	return icf.createTopicAndAssignHandler(identifier, interceptor, true)
+>>>>>>> Stashed changes
 }
 
 // IsInterfaceNil returns true if there is no value under the interface

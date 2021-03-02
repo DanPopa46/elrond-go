@@ -6,7 +6,10 @@ import (
 
 	"github.com/ElrondNetwork/elrond-go/consensus"
 	"github.com/ElrondNetwork/elrond-go/core"
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/core/indexer"
+=======
+>>>>>>> Stashed changes
 	"github.com/ElrondNetwork/elrond-go/crypto"
 	"github.com/ElrondNetwork/elrond-go/data"
 	"github.com/ElrondNetwork/elrond-go/data/state"
@@ -215,6 +218,20 @@ func WithBlockProcessor(blockProcessor process.BlockProcessor) Option {
 	}
 }
 
+<<<<<<< Updated upstream
+=======
+// WithBlockTracker sets up the block tracker option for the Node
+func WithBlockTracker(blockTracker process.BlocksTracker) Option {
+	return func(n *Node) error {
+		if blockTracker == nil || blockTracker.IsInterfaceNil() {
+			return ErrNilBlockTracker
+		}
+		n.blockTracker = blockTracker
+		return nil
+	}
+}
+
+>>>>>>> Stashed changes
 // WithGenesisTime sets up the genesis time option for the Node
 func WithGenesisTime(genesisTime time.Time) Option {
 	return func(n *Node) error {
@@ -256,6 +273,7 @@ func WithShardCoordinator(shardCoordinator sharding.Coordinator) Option {
 	}
 }
 
+<<<<<<< Updated upstream
 // WithNodesCoordinator sets up the nodes coordinator
 func WithNodesCoordinator(nodesCoordinator sharding.NodesCoordinator) Option {
 	return func(n *Node) error {
@@ -267,6 +285,8 @@ func WithNodesCoordinator(nodesCoordinator sharding.NodesCoordinator) Option {
 	}
 }
 
+=======
+>>>>>>> Stashed changes
 // WithUint64ByteSliceConverter sets up the uint64 <-> []byte converter
 func WithUint64ByteSliceConverter(converter typeConverters.Uint64ByteSliceConverter) Option {
 	return func(n *Node) error {
@@ -390,6 +410,7 @@ func WithAppStatusHandler(aph core.AppStatusHandler) Option {
 		return nil
 	}
 }
+<<<<<<< Updated upstream
 
 // WithIndexer sets up a indexer for the Node
 func WithIndexer(indexer indexer.Indexer) Option {
@@ -398,3 +419,5 @@ func WithIndexer(indexer indexer.Indexer) Option {
 		return nil
 	}
 }
+=======
+>>>>>>> Stashed changes

@@ -7,15 +7,22 @@ import (
 	"testing"
 	"time"
 
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/node/heartbeat"
 	"github.com/ElrondNetwork/elrond-go/node/heartbeat/storage"
 	"github.com/ElrondNetwork/elrond-go/node/mock"
 	"github.com/ElrondNetwork/elrond-go/p2p"
+=======
+	"github.com/ElrondNetwork/elrond-go/crypto"
+	"github.com/ElrondNetwork/elrond-go/node/heartbeat"
+	"github.com/ElrondNetwork/elrond-go/node/mock"
+>>>>>>> Stashed changes
 	"github.com/stretchr/testify/assert"
 )
 
 //------- NewMonitor
 
+<<<<<<< Updated upstream
 func TestNewMonitor_NilMarshalizerShouldErr(t *testing.T) {
 	t.Parallel()
 
@@ -103,11 +110,72 @@ func TestNewMonitor_NilTimeHandlerShouldErr(t *testing.T) {
 
 	assert.Nil(t, mon)
 	assert.Equal(t, heartbeat.ErrNilTimer, err)
+=======
+func TestNewMonitor_NilSingleSignerShouldErr(t *testing.T) {
+	t.Parallel()
+
+	mon, err := heartbeat.NewMonitor(
+		nil,
+		&mock.KeyGenMock{},
+		&mock.MarshalizerMock{},
+		0,
+		map[uint32][]string{0: {""}},
+	)
+
+	assert.Nil(t, mon)
+	assert.Equal(t, heartbeat.ErrNilSingleSigner, err)
+}
+
+func TestNewMonitor_NilKeygenShouldErr(t *testing.T) {
+	t.Parallel()
+
+	mon, err := heartbeat.NewMonitor(
+		&mock.SinglesignMock{},
+		nil,
+		&mock.MarshalizerMock{},
+		0,
+		map[uint32][]string{0: {""}},
+	)
+
+	assert.Nil(t, mon)
+	assert.Equal(t, heartbeat.ErrNilKeyGenerator, err)
+}
+
+func TestNewMonitor_NilMarshalizerShouldErr(t *testing.T) {
+	t.Parallel()
+
+	mon, err := heartbeat.NewMonitor(
+		&mock.SinglesignMock{},
+		&mock.KeyGenMock{},
+		nil,
+		0,
+		map[uint32][]string{0: {""}},
+	)
+
+	assert.Nil(t, mon)
+	assert.Equal(t, heartbeat.ErrNilMarshalizer, err)
+}
+
+func TestNewMonitor_EmptyPublicKeyListShouldErr(t *testing.T) {
+	t.Parallel()
+
+	mon, err := heartbeat.NewMonitor(
+		&mock.SinglesignMock{},
+		&mock.KeyGenMock{},
+		&mock.MarshalizerMock{},
+		0,
+		make(map[uint32][]string),
+	)
+
+	assert.Nil(t, mon)
+	assert.Equal(t, heartbeat.ErrEmptyPublicKeysMap, err)
+>>>>>>> Stashed changes
 }
 
 func TestNewMonitor_OkValsShouldCreatePubkeyMap(t *testing.T) {
 	t.Parallel()
 
+<<<<<<< Updated upstream
 	th := &mock.MockTimer{}
 	mon, err := heartbeat.NewMonitor(
 		&mock.MarshalizerMock{},
@@ -130,6 +198,14 @@ func TestNewMonitor_OkValsShouldCreatePubkeyMap(t *testing.T) {
 			},
 		},
 		th,
+=======
+	mon, err := heartbeat.NewMonitor(
+		&mock.SinglesignMock{},
+		&mock.KeyGenMock{},
+		&mock.MarshalizerMock{},
+		1,
+		map[uint32][]string{0: {"pk1", "pk2"}},
+>>>>>>> Stashed changes
 	)
 
 	assert.NotNil(t, mon)
@@ -141,7 +217,10 @@ func TestNewMonitor_OkValsShouldCreatePubkeyMap(t *testing.T) {
 func TestNewMonitor_ShouldComputeShardId(t *testing.T) {
 	t.Parallel()
 
+<<<<<<< Updated upstream
 	th := &mock.MockTimer{}
+=======
+>>>>>>> Stashed changes
 	pksPerShards := map[uint32][]string{
 		0: {"pk0"},
 		1: {"pk1"},
@@ -149,6 +228,7 @@ func TestNewMonitor_ShouldComputeShardId(t *testing.T) {
 
 	maxDuration := time.Millisecond
 	mon, err := heartbeat.NewMonitor(
+<<<<<<< Updated upstream
 		&mock.MarshalizerMock{},
 		maxDuration,
 		pksPerShards,
@@ -169,6 +249,13 @@ func TestNewMonitor_ShouldComputeShardId(t *testing.T) {
 			},
 		},
 		th,
+=======
+		&mock.SinglesignMock{},
+		&mock.KeyGenMock{},
+		&mock.MarshalizerMock{},
+		maxDuration,
+		pksPerShards,
+>>>>>>> Stashed changes
 	)
 
 	assert.NotNil(t, mon)
@@ -181,6 +268,7 @@ func TestNewMonitor_ShouldComputeShardId(t *testing.T) {
 
 //------- ProcessReceivedMessage
 
+<<<<<<< Updated upstream
 func TestMonitor_ProcessReceivedMessageShouldWork(t *testing.T) {
 	t.Parallel()
 
@@ -229,6 +317,145 @@ func TestMonitor_ProcessReceivedMessageShouldWork(t *testing.T) {
 	}
 	hbBytes, _ := json.Marshal(hb)
 	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: hbBytes}, nil)
+=======
+func TestMonitor_ProcessReceivedMessageNilMessageShouldErr(t *testing.T) {
+	t.Parallel()
+
+	mon, _ := heartbeat.NewMonitor(
+		&mock.SinglesignMock{},
+		&mock.KeyGenMock{},
+		&mock.MarshalizerMock{},
+		1,
+		map[uint32][]string{0: {"pk1"}},
+	)
+
+	err := mon.ProcessReceivedMessage(nil)
+
+	assert.Equal(t, heartbeat.ErrNilMessage, err)
+}
+
+func TestMonitor_ProcessReceivedMessageNilDataShouldErr(t *testing.T) {
+	t.Parallel()
+
+	mon, _ := heartbeat.NewMonitor(
+		&mock.SinglesignMock{},
+		&mock.KeyGenMock{},
+		&mock.MarshalizerMock{},
+		0,
+		map[uint32][]string{0: {"pk1"}},
+	)
+
+	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{})
+
+	assert.Equal(t, heartbeat.ErrNilDataToProcess, err)
+}
+
+func TestMonitor_ProcessReceivedMessageMarshalFailsShouldErr(t *testing.T) {
+	t.Parallel()
+
+	errExpected := errors.New("expected err")
+
+	mon, _ := heartbeat.NewMonitor(
+		&mock.SinglesignMock{},
+		&mock.KeyGenMock{},
+		&mock.MarshalizerMock{
+			UnmarshalHandler: func(obj interface{}, buff []byte) error {
+				return errExpected
+			},
+		},
+		1,
+		map[uint32][]string{0: {"pk1"}},
+	)
+
+	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: []byte("")})
+
+	assert.Equal(t, errExpected, err)
+}
+
+func TestMonitor_ProcessReceivedMessageWrongPubkeyShouldErr(t *testing.T) {
+	t.Parallel()
+
+	errExpected := errors.New("expected err")
+
+	mon, _ := heartbeat.NewMonitor(
+		&mock.SinglesignMock{},
+		&mock.KeyGenMock{
+			PublicKeyFromByteArrayMock: func(b []byte) (key crypto.PublicKey, e error) {
+				return nil, errExpected
+			},
+		},
+		&mock.MarshalizerMock{
+			UnmarshalHandler: func(obj interface{}, buff []byte) error {
+				return nil
+			},
+		},
+		1,
+		map[uint32][]string{0: {"pk1"}},
+	)
+
+	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: []byte("")})
+
+	assert.Equal(t, errExpected, err)
+}
+
+func TestMonitor_ProcessReceivedMessageVerifyFailsShouldErr(t *testing.T) {
+	t.Parallel()
+
+	errExpected := errors.New("expected err")
+
+	mon, _ := heartbeat.NewMonitor(
+		&mock.SinglesignStub{
+			VerifyCalled: func(public crypto.PublicKey, msg []byte, sig []byte) error {
+				return errExpected
+			},
+		},
+		&mock.KeyGenMock{
+			PublicKeyFromByteArrayMock: func(b []byte) (key crypto.PublicKey, e error) {
+				return nil, nil
+			},
+		},
+		&mock.MarshalizerMock{
+			UnmarshalHandler: func(obj interface{}, buff []byte) error {
+				return nil
+			},
+		},
+		1,
+		map[uint32][]string{0: {"pk1"}},
+	)
+
+	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: []byte("")})
+
+	assert.Equal(t, errExpected, err)
+}
+
+func TestMonitor_ProcessReceivedMessageShouldWork(t *testing.T) {
+	t.Parallel()
+
+	pubKey := "pk1"
+
+	mon, _ := heartbeat.NewMonitor(
+		&mock.SinglesignStub{
+			VerifyCalled: func(public crypto.PublicKey, msg []byte, sig []byte) error {
+				return nil
+			},
+		},
+		&mock.KeyGenMock{
+			PublicKeyFromByteArrayMock: func(b []byte) (key crypto.PublicKey, e error) {
+				return nil, nil
+			},
+		},
+		&mock.MarshalizerMock{
+			UnmarshalHandler: func(obj interface{}, buff []byte) error {
+				(obj.(*heartbeat.Heartbeat)).Pubkey = []byte(pubKey)
+				return nil
+			},
+		},
+		time.Second*1000,
+		map[uint32][]string{0: {pubKey}},
+	)
+
+	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: []byte("")})
+>>>>>>> Stashed changes
 	assert.Nil(t, err)
 
 	//a delay is mandatory for the go routine to finish its job
@@ -244,6 +471,7 @@ func TestMonitor_ProcessReceivedMessageWithNewPublicKey(t *testing.T) {
 
 	pubKey := "pk1"
 
+<<<<<<< Updated upstream
 	th := &mock.MockTimer{}
 	mon, _ := heartbeat.NewMonitor(
 		&mock.MarshalizerMock{
@@ -287,6 +515,30 @@ func TestMonitor_ProcessReceivedMessageWithNewPublicKey(t *testing.T) {
 	}
 	hbBytes, _ := json.Marshal(hb)
 	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: hbBytes}, nil)
+=======
+	mon, _ := heartbeat.NewMonitor(
+		&mock.SinglesignStub{
+			VerifyCalled: func(public crypto.PublicKey, msg []byte, sig []byte) error {
+				return nil
+			},
+		},
+		&mock.KeyGenMock{
+			PublicKeyFromByteArrayMock: func(b []byte) (key crypto.PublicKey, e error) {
+				return nil, nil
+			},
+		},
+		&mock.MarshalizerMock{
+			UnmarshalHandler: func(obj interface{}, buff []byte) error {
+				(obj.(*heartbeat.Heartbeat)).Pubkey = []byte(pubKey)
+				return nil
+			},
+		},
+		time.Second*1000,
+		map[uint32][]string{0: {"pk2"}},
+	)
+
+	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: []byte("")})
+>>>>>>> Stashed changes
 	assert.Nil(t, err)
 
 	//a delay is mandatory for the go routine to finish its job
@@ -303,8 +555,22 @@ func TestMonitor_ProcessReceivedMessageWithNewShardID(t *testing.T) {
 
 	pubKey := []byte("pk1")
 
+<<<<<<< Updated upstream
 	th := &mock.MockTimer{}
 	mon, _ := heartbeat.NewMonitor(
+=======
+	mon, _ := heartbeat.NewMonitor(
+		&mock.SinglesignStub{
+			VerifyCalled: func(public crypto.PublicKey, msg []byte, sig []byte) error {
+				return nil
+			},
+		},
+		&mock.KeyGenMock{
+			PublicKeyFromByteArrayMock: func(b []byte) (key crypto.PublicKey, e error) {
+				return nil, nil
+			},
+		},
+>>>>>>> Stashed changes
 		&mock.MarshalizerMock{
 			UnmarshalHandler: func(obj interface{}, buff []byte) error {
 				var rcvdHb heartbeat.Heartbeat
@@ -316,6 +582,7 @@ func TestMonitor_ProcessReceivedMessageWithNewShardID(t *testing.T) {
 		},
 		time.Second*1000,
 		map[uint32][]string{0: {"pk1"}},
+<<<<<<< Updated upstream
 		time.Now(),
 		&mock.MessageHandlerStub{
 			CreateHeartbeatFromP2pMessageCalled: func(message p2p.MessageP2P) (*heartbeat.Heartbeat, error) {
@@ -342,6 +609,8 @@ func TestMonitor_ProcessReceivedMessageWithNewShardID(t *testing.T) {
 			},
 		},
 		th,
+=======
+>>>>>>> Stashed changes
 	)
 
 	// First send from pk1 from shard 0
@@ -353,7 +622,11 @@ func TestMonitor_ProcessReceivedMessageWithNewShardID(t *testing.T) {
 	buffToSend, err := json.Marshal(hb)
 	assert.Nil(t, err)
 
+<<<<<<< Updated upstream
 	err = mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: buffToSend}, nil)
+=======
+	err = mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: buffToSend})
+>>>>>>> Stashed changes
 	assert.Nil(t, err)
 
 	//a delay is mandatory for the go routine to finish its job
@@ -373,7 +646,11 @@ func TestMonitor_ProcessReceivedMessageWithNewShardID(t *testing.T) {
 
 	assert.Nil(t, err)
 
+<<<<<<< Updated upstream
 	err = mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: buffToSend}, nil)
+=======
+	err = mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: buffToSend})
+>>>>>>> Stashed changes
 
 	time.Sleep(1 * time.Second)
 
@@ -389,9 +666,24 @@ func TestMonitor_ProcessReceivedMessageShouldSetPeerInactive(t *testing.T) {
 
 	pubKey1 := "pk1-should-stay-online"
 	pubKey2 := "pk2-should-go-offline"
+<<<<<<< Updated upstream
 	storer, _ := storage.NewHeartbeatDbStorer(mock.NewStorerMock(), &mock.MarshalizerFake{})
 	th := &mock.MockTimer{}
 	mon, _ := heartbeat.NewMonitor(
+=======
+
+	mon, _ := heartbeat.NewMonitor(
+		&mock.SinglesignStub{
+			VerifyCalled: func(public crypto.PublicKey, msg []byte, sig []byte) error {
+				return nil
+			},
+		},
+		&mock.KeyGenMock{
+			PublicKeyFromByteArrayMock: func(b []byte) (key crypto.PublicKey, e error) {
+				return nil, nil
+			},
+		},
+>>>>>>> Stashed changes
 		&mock.MarshalizerMock{
 			UnmarshalHandler: func(obj interface{}, buff []byte) error {
 				var rcvdHb heartbeat.Heartbeat
@@ -401,6 +693,7 @@ func TestMonitor_ProcessReceivedMessageShouldSetPeerInactive(t *testing.T) {
 				return nil
 			},
 		},
+<<<<<<< Updated upstream
 		time.Second*5,
 		map[uint32][]string{0: {pubKey1, pubKey2}},
 		th.Now(),
@@ -413,6 +706,10 @@ func TestMonitor_ProcessReceivedMessageShouldSetPeerInactive(t *testing.T) {
 		},
 		storer,
 		th,
+=======
+		time.Millisecond*5,
+		map[uint32][]string{0: {pubKey1, pubKey2}},
+>>>>>>> Stashed changes
 	)
 
 	// First send from pk1
@@ -424,12 +721,17 @@ func TestMonitor_ProcessReceivedMessageShouldSetPeerInactive(t *testing.T) {
 	assert.Nil(t, err)
 
 	// set pk2 to inactive as max inactive time is lower
+<<<<<<< Updated upstream
 	time.Sleep(10 * time.Millisecond)
 	th.IncrementSeconds(6)
+=======
+	time.Sleep(6 * time.Millisecond)
+>>>>>>> Stashed changes
 
 	// Check that both are added
 	hbStatus := mon.GetHeartbeats()
 	assert.Equal(t, 2, len(hbStatus))
+<<<<<<< Updated upstream
 	//assert.False(t, hbStatus[1].IsActive)
 
 	// Now send a message from pk1 in order to see that pk2 is not active anymore
@@ -438,6 +740,14 @@ func TestMonitor_ProcessReceivedMessageShouldSetPeerInactive(t *testing.T) {
 	assert.Nil(t, err)
 
 	th.IncrementSeconds(4)
+=======
+
+	// Now send a message from pk1 in order to see that pk2 is not active anymore
+	err = sendHbMessageFromPubKey(pubKey1, mon)
+	assert.Nil(t, err)
+
+	time.Sleep(5 * time.Millisecond)
+>>>>>>> Stashed changes
 
 	hbStatus = mon.GetHeartbeats()
 
@@ -452,6 +762,10 @@ func sendHbMessageFromPubKey(pubKey string, mon *heartbeat.Monitor) error {
 		Pubkey: []byte(pubKey),
 	}
 	buffToSend, _ := json.Marshal(hb)
+<<<<<<< Updated upstream
 	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: buffToSend}, nil)
+=======
+	err := mon.ProcessReceivedMessage(&mock.P2PMessageStub{DataField: buffToSend})
+>>>>>>> Stashed changes
 	return err
 }

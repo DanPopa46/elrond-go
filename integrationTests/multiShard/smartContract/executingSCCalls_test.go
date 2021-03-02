@@ -22,7 +22,11 @@ var gasPrice = 1
 var gasLimit = 1000
 var initialValueForInternalVariable = uint64(45)
 
+<<<<<<< Updated upstream
 func createScCallsNodes() (p2p.Messenger, map[uint32][]*testNode) {
+=======
+func createScCallsNodes() (p2p.Messenger, []*testNode) {
+>>>>>>> Stashed changes
 	advertiser := createMessengerWithKadDht(context.Background(), "")
 	_ = advertiser.Bootstrap()
 
@@ -86,10 +90,16 @@ func haveTime() time.Duration {
 }
 
 // Test within a network of two shards the following situation
+<<<<<<< Updated upstream
 // 1. Node in first shard deploys a smart contract -> we also make sure that the resulting smart contract address falls
 // within the same shard
 // 2. The same account within the first shard calls the smart contract, we make sure the smart contract is updated and
 // the gas is subtracted from the caller's balance
+=======
+// 1. Node in first shard deploys a smart contract -> we also make sure that the resulting smart contract address falls within the same shard
+// 2. The same account within the first shard calls the smart contract, we make sure the smart contract is updated and the gas
+//  is subtracted from the caller's balance
+>>>>>>> Stashed changes
 func TestProcessSCCallsInMultiShardArchitecture_FirstShard(t *testing.T) {
 	if testing.Short() {
 		t.Skip("this is not a short test")
@@ -103,6 +113,7 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShard(t *testing.T) {
 	advertiser, nodes := createScCallsNodes()
 	defer func() {
 		_ = advertiser.Close()
+<<<<<<< Updated upstream
 		for _, nodeList := range nodes {
 			for _, n := range nodeList {
 				_ = n.node.Stop()
@@ -111,6 +122,14 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShard(t *testing.T) {
 	}()
 
 	proposerNodeShard1 := nodes[0][0]
+=======
+		for _, n := range nodes {
+			_ = n.node.Stop()
+		}
+	}()
+
+	proposerNodeShard1 := nodes[0]
+>>>>>>> Stashed changes
 
 	// delay for bootstrapping and topic announcement
 	fmt.Println("Delaying for node bootstrap and topic announcement...")
@@ -119,7 +138,11 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShard(t *testing.T) {
 	senderAddressBytes := []byte("12345678901234567890123456789012")
 
 	// Minting sender account
+<<<<<<< Updated upstream
 	createMintingForSenders(nodes[0], senderShard, [][]byte{senderAddressBytes}, senderMintingValue)
+=======
+	createMintingForSenders(nodes, senderShard, [][]byte{senderAddressBytes}, senderMintingValue)
+>>>>>>> Stashed changes
 
 	// should deploy smart contract -> we process a block containing only the sc deployment tx
 	deploySmartContract(t, proposerNodeShard1, generalRoundNumber, senderAddressBytes, senderNonce)
@@ -135,7 +158,11 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShard(t *testing.T) {
 	generalRoundNumber++
 
 	// setting the sc deployment address (printed by the transaction processor)
+<<<<<<< Updated upstream
 	scDeploymentAdddress, _ := hex.DecodeString("0000000000000000ffffcca1490e8cd87c767da41cdab632a7a206c5703c3132")
+=======
+	scDeploymentAdddress, _ := hex.DecodeString("00000000000000000000cca1490e8cd87c767da41cdab632a7a206c5703c3132")
+>>>>>>> Stashed changes
 
 	// Now that the SC is deployed, we test a call from an account located in the first shard
 	addValue := uint64(100)
@@ -184,6 +211,7 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 	advertiser, nodes := createScCallsNodes()
 	defer func() {
 		_ = advertiser.Close()
+<<<<<<< Updated upstream
 		for _, nodeList := range nodes {
 			for _, n := range nodeList {
 				_ = n.node.Stop()
@@ -193,6 +221,15 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 
 	proposerNodeShard1 := nodes[0][0]
 	proposerNodeShard2 := nodes[1][0]
+=======
+		for _, n := range nodes {
+			_ = n.node.Stop()
+		}
+	}()
+
+	proposerNodeShard1 := nodes[0]
+	proposerNodeShard2 := nodes[1]
+>>>>>>> Stashed changes
 
 	// delay for bootstrapping and topic announcement
 	fmt.Println("Delaying for node bootstrap and topic announcement...")
@@ -202,8 +239,13 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 	secondShardAddressBytes := []byte("12345678901234567890123456789011")
 
 	// Minting sender account
+<<<<<<< Updated upstream
 	createMintingForSenders(nodes[0], senderShard, [][]byte{senderAddressBytes}, mintingValue)
 	createMintingForSenders(nodes[1], receiverShard, [][]byte{secondShardAddressBytes}, mintingValue)
+=======
+	createMintingForSenders(nodes, senderShard, [][]byte{senderAddressBytes}, mintingValue)
+	createMintingForSenders(nodes, receiverShard, [][]byte{secondShardAddressBytes}, mintingValue)
+>>>>>>> Stashed changes
 
 	// should deploy smart contract -> we process a block containing only the sc deployment tx
 	deploySmartContract(t, proposerNodeShard1, generalRoundNumber, senderAddressBytes, senderNonce)
@@ -220,7 +262,11 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 	generalRoundNumber++
 
 	// setting the sc deployment address (printed by the transaction processor)
+<<<<<<< Updated upstream
 	scDeploymentAdddress, _ := hex.DecodeString("0000000000000000ffffcca1490e8cd87c767da41cdab632a7a206c5703c3132")
+=======
+	scDeploymentAdddress, _ := hex.DecodeString("00000000000000000000cca1490e8cd87c767da41cdab632a7a206c5703c3132")
+>>>>>>> Stashed changes
 
 	// Now that the SC is deployed, we test a call from an account located in the second shard
 	addValue := uint64(100)
@@ -242,8 +288,15 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 
 	// Test again that the gas for calling the smart contract was subtracted from the sender's account
 	acc, _ = proposerNodeShard2.node.GetAccount(hex.EncodeToString(secondShardAddressBytes))
+<<<<<<< Updated upstream
 	afterFee := big.NewInt(0).Sub(mintingValue, big.NewInt(0).SetUint64(contractCallTx.GasLimit*contractCallTx.GasPrice))
 	assert.Equal(t, afterFee, acc.Balance)
+=======
+	// TODO: Afrer fees are implemented, from mintingValue we should subtract gasLimit + fees until the other shard executes
+	//  the smart contract and a refund can be made with the remaining value the following rounds
+	assert.Equal(t, mintingValue, acc.Balance)
+
+>>>>>>> Stashed changes
 	receiverNonce++
 	assert.Equal(t, receiverNonce, acc.Nonce)
 
@@ -281,6 +334,7 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 	advertiser, nodes := createScCallsNodes()
 	defer func() {
 		_ = advertiser.Close()
+<<<<<<< Updated upstream
 		for _, nodeList := range nodes {
 			for _, n := range nodeList {
 				_ = n.node.Stop()
@@ -290,6 +344,15 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 
 	proposerNodeShardSC := nodes[0][0]
 	proposerNodeShardAccount := nodes[1][0]
+=======
+		for _, n := range nodes {
+			_ = n.node.Stop()
+		}
+	}()
+
+	proposerNodeShardSC := nodes[0]
+	proposerNodeShardAccount := nodes[1]
+>>>>>>> Stashed changes
 
 	// delay for bootstrapping and topic announcement
 	fmt.Println("Delaying for node bootstrap and topic announcement...")
@@ -299,8 +362,13 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 	accountShardAddressBytes := []byte("12345678901234567890123456789011")
 
 	// Minting sender account
+<<<<<<< Updated upstream
 	createMintingForSenders(nodes[0], scShard, [][]byte{scAccountAddressBytes}, mintingValue)
 	createMintingForSenders(nodes[1], accShard, [][]byte{accountShardAddressBytes}, mintingValue)
+=======
+	createMintingForSenders(nodes, scShard, [][]byte{scAccountAddressBytes}, mintingValue)
+	createMintingForSenders(nodes, accShard, [][]byte{accountShardAddressBytes}, mintingValue)
+>>>>>>> Stashed changes
 
 	// should deploy smart contract -> we process a block containing only the sc deployment tx
 	deploySmartContract(t, proposerNodeShardSC, generalRoundNumber, scAccountAddressBytes, accNonce)
@@ -316,10 +384,17 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 	generalRoundNumber++
 
 	// setting the sc deployment address (printed by the transaction processor)
+<<<<<<< Updated upstream
 	scDeploymentAdddress, _ := hex.DecodeString("0000000000000000ffffcca1490e8cd87c767da41cdab632a7a206c5703c3132")
 
 	// Update the SC account balance so we can call withdraw function
 	createMintingForSenders(nodes[0], scShard, [][]byte{scDeploymentAdddress}, mintingValue)
+=======
+	scDeploymentAdddress, _ := hex.DecodeString("00000000000000000000cca1490e8cd87c767da41cdab632a7a206c5703c3132")
+
+	// Update the SC account balance so we can call withdraw function
+	createMintingForSenders(nodes, scShard, [][]byte{scDeploymentAdddress}, mintingValue)
+>>>>>>> Stashed changes
 
 	// Now that the SC is deployed, we test a call from an account located in the second shard
 	withdrawValue := uint64(100)
@@ -333,8 +408,13 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 		withdrawValue,
 	)
 
+<<<<<<< Updated upstream
 	scNonce++
 	// The account shard should process this tx as MoveBalance
+=======
+	// The account shard should process this tx as MoveBalance
+	scNonce++
+>>>>>>> Stashed changes
 	processAndTestSmartContractCallInSender(
 		t,
 		contractCallTx,
@@ -344,7 +424,10 @@ func TestProcessSCCallsInMultiShardArchitecture_FirstShardReceivesCallFromSecond
 		mintingValue,
 		scNonce,
 	)
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 	generalRoundNumber++
 
 	// After second shard processed the transaction, tx should get into the first shard where the SC resides
@@ -388,8 +471,14 @@ func processAndTestSmartContractCallInSender(
 
 	// Test again that the gas for calling the smart contract was subtracted from the sender's account
 	acc, _ := proposerNodeShardAccount.node.GetAccount(hex.EncodeToString(accountShardAddressBytes))
+<<<<<<< Updated upstream
 	afterFee := big.NewInt(0).Sub(mintingValue, big.NewInt(0).SetUint64(contractCallTx.GasLimit*contractCallTx.GasPrice))
 	assert.Equal(t, afterFee, acc.Balance)
+=======
+	// TODO: Afrer fees are implemented, from mintingValue we should subtract gasLimit + fees until the other shard executes
+	//  the smart contract and a refund can be made with the remaining value the following rounds
+	assert.Equal(t, mintingValue, acc.Balance)
+>>>>>>> Stashed changes
 	assert.Equal(t, scNonce, acc.Nonce)
 }
 
@@ -448,7 +537,11 @@ func processAndTestIntermediateResults(t *testing.T, proposerNodeShardSC *testNo
 	//  - Initial balance + withdraw value - fees
 	// TODO: Fees and gas should be taken into consideration when the fees are implemented - now we have extra money
 	//  from the gas returned since the gas was not subtracted in the first place
+<<<<<<< Updated upstream
 	finalValue := big.NewInt(0).Add(mintingValue, big.NewInt(int64(withdrawValue-1)))
+=======
+	finalValue := big.NewInt(0).Add(mintingValue, big.NewInt(int64(withdrawValue+uint64(gasLimit-1*gasPrice))))
+>>>>>>> Stashed changes
 	acc, _ := proposerNodeShardAccount.node.GetAccount(hex.EncodeToString(accountShardAddressBytes))
 	assert.Equal(t, finalValue, acc.Balance)
 }

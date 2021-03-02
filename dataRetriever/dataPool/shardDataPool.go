@@ -8,7 +8,10 @@ import (
 type shardedDataPool struct {
 	transactions         dataRetriever.ShardedDataCacherNotifier
 	unsignedTransactions dataRetriever.ShardedDataCacherNotifier
+<<<<<<< Updated upstream
 	rewardTransactions   dataRetriever.ShardedDataCacherNotifier
+=======
+>>>>>>> Stashed changes
 	headers              storage.Cacher
 	metaBlocks           storage.Cacher
 	headersNonces        dataRetriever.Uint64SyncMapCacher
@@ -20,7 +23,10 @@ type shardedDataPool struct {
 func NewShardedDataPool(
 	transactions dataRetriever.ShardedDataCacherNotifier,
 	unsignedTransactions dataRetriever.ShardedDataCacherNotifier,
+<<<<<<< Updated upstream
 	rewardTransactions dataRetriever.ShardedDataCacherNotifier,
+=======
+>>>>>>> Stashed changes
 	headers storage.Cacher,
 	headersNonces dataRetriever.Uint64SyncMapCacher,
 	miniBlocks storage.Cacher,
@@ -34,9 +40,12 @@ func NewShardedDataPool(
 	if unsignedTransactions == nil || unsignedTransactions.IsInterfaceNil() {
 		return nil, dataRetriever.ErrNilUnsignedTransactionPool
 	}
+<<<<<<< Updated upstream
 	if rewardTransactions == nil || rewardTransactions.IsInterfaceNil() {
 		return nil, dataRetriever.ErrNilRewardTransactionPool
 	}
+=======
+>>>>>>> Stashed changes
 	if headers == nil || headers.IsInterfaceNil() {
 		return nil, dataRetriever.ErrNilHeadersDataPool
 	}
@@ -56,7 +65,10 @@ func NewShardedDataPool(
 	return &shardedDataPool{
 		transactions:         transactions,
 		unsignedTransactions: unsignedTransactions,
+<<<<<<< Updated upstream
 		rewardTransactions:   rewardTransactions,
+=======
+>>>>>>> Stashed changes
 		headers:              headers,
 		headersNonces:        headersNonces,
 		miniBlocks:           miniBlocks,
@@ -75,11 +87,14 @@ func (tdp *shardedDataPool) UnsignedTransactions() dataRetriever.ShardedDataCach
 	return tdp.unsignedTransactions
 }
 
+<<<<<<< Updated upstream
 // RewardTransactions returns the holder for reward transactions (cross shard result entities)
 func (tdp *shardedDataPool) RewardTransactions() dataRetriever.ShardedDataCacherNotifier {
 	return tdp.rewardTransactions
 }
 
+=======
+>>>>>>> Stashed changes
 // Headers returns the holder for headers
 func (tdp *shardedDataPool) Headers() storage.Cacher {
 	return tdp.headers

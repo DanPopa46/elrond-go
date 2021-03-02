@@ -10,20 +10,32 @@ import (
 )
 
 type MetaPoolsHolderFake struct {
+<<<<<<< Updated upstream
 	metaBlocks storage.Cacher
 	miniBlocks      storage.Cacher
 	shardHeaders    storage.Cacher
 	headersNonces   dataRetriever.Uint64SyncMapCacher
 	transactions    dataRetriever.ShardedDataCacherNotifier
 	unsigned        dataRetriever.ShardedDataCacherNotifier
+=======
+	metaChainBlocks storage.Cacher
+	miniBlockHashes dataRetriever.ShardedDataCacherNotifier
+	shardHeaders    storage.Cacher
+	headersNonces   dataRetriever.Uint64SyncMapCacher
+>>>>>>> Stashed changes
 }
 
 func NewMetaPoolsHolderFake() *MetaPoolsHolderFake {
 	mphf := &MetaPoolsHolderFake{}
+<<<<<<< Updated upstream
 	mphf.miniBlocks, _ = storageUnit.NewCache(storageUnit.LRUCache, 10000, 1)
 	mphf.transactions, _ = shardedData.NewShardedData(storageUnit.CacheConfig{Size: 10000, Type: storageUnit.LRUCache})
 	mphf.unsigned, _ = shardedData.NewShardedData(storageUnit.CacheConfig{Size: 10000, Type: storageUnit.LRUCache})
 	mphf.metaBlocks, _ = storageUnit.NewCache(storageUnit.LRUCache, 10000, 1)
+=======
+	mphf.miniBlockHashes, _ = shardedData.NewShardedData(storageUnit.CacheConfig{Size: 10000, Type: storageUnit.LRUCache})
+	mphf.metaChainBlocks, _ = storageUnit.NewCache(storageUnit.LRUCache, 10000, 1)
+>>>>>>> Stashed changes
 	mphf.shardHeaders, _ = storageUnit.NewCache(storageUnit.LRUCache, 10000, 1)
 
 	cacheShardHdrNonces, _ := storageUnit.NewCache(storageUnit.LRUCache, 10000, 1)
@@ -34,6 +46,7 @@ func NewMetaPoolsHolderFake() *MetaPoolsHolderFake {
 	return mphf
 }
 
+<<<<<<< Updated upstream
 func (mphf *MetaPoolsHolderFake) Transactions() dataRetriever.ShardedDataCacherNotifier {
 	return mphf.transactions
 }
@@ -48,6 +61,14 @@ func (mphf *MetaPoolsHolderFake) MetaBlocks() storage.Cacher {
 
 func (mphf *MetaPoolsHolderFake) MiniBlocks() storage.Cacher {
 	return mphf.miniBlocks
+=======
+func (mphf *MetaPoolsHolderFake) MetaChainBlocks() storage.Cacher {
+	return mphf.metaChainBlocks
+}
+
+func (mphf *MetaPoolsHolderFake) MiniBlockHashes() dataRetriever.ShardedDataCacherNotifier {
+	return mphf.miniBlockHashes
+>>>>>>> Stashed changes
 }
 
 func (mphf *MetaPoolsHolderFake) ShardHeaders() storage.Cacher {

@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 //+build linux
+=======
+//+build linux darwin
+>>>>>>> Stashed changes
 
 package logger
 

@@ -3,11 +3,18 @@ package libp2p
 import (
 	"context"
 
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/core/throttler"
+=======
+>>>>>>> Stashed changes
 	"github.com/ElrondNetwork/elrond-go/p2p"
 	"github.com/ElrondNetwork/elrond-go/p2p/loadBalancer"
 	"github.com/libp2p/go-libp2p-core/connmgr"
 	libp2pCrypto "github.com/libp2p/go-libp2p-core/crypto"
+<<<<<<< Updated upstream
+=======
+	"github.com/libp2p/go-libp2p-core/host"
+>>>>>>> Stashed changes
 	"github.com/libp2p/go-libp2p/p2p/net/mock"
 )
 
@@ -34,7 +41,11 @@ func NewMemoryMessenger(
 		return nil, err
 	}
 
+<<<<<<< Updated upstream
 	lctx, err := NewLibp2pContext(ctx, NewConnectableHost(h))
+=======
+	lctx, err := NewLibp2pContext(ctx, NewConnectableHost(host.Host(h)))
+>>>>>>> Stashed changes
 	if err != nil {
 		log.LogIfError(h.Close())
 		return nil, err
@@ -50,6 +61,7 @@ func NewMemoryMessenger(
 		return nil, err
 	}
 
+<<<<<<< Updated upstream
 	goRoutinesThrottler, err := throttler.NewNumGoRoutineThrottler(broadcastGoRoutines)
 	if err != nil {
 		log.LogIfError(h.Close())
@@ -58,6 +70,8 @@ func NewMemoryMessenger(
 
 	mes.goRoutinesThrottler = goRoutinesThrottler
 
+=======
+>>>>>>> Stashed changes
 	return mes, err
 }
 

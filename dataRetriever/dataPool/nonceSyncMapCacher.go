@@ -120,7 +120,10 @@ func (nspc *nonceSyncMapCacher) Remove(nonce uint64, shardId uint32) {
 	}
 
 	syncMap.Delete(shardId)
+<<<<<<< Updated upstream
 	nspc.removeNonceFromCacheIfSyncMapIsEmpty(nonce, syncMap)
+=======
+>>>>>>> Stashed changes
 }
 
 // RegisterHandler registers a new handler to be called when a new data is added
@@ -167,6 +170,7 @@ func (nspc *nonceSyncMapCacher) IsInterfaceNil() bool {
 	}
 	return false
 }
+<<<<<<< Updated upstream
 
 func (nspc *nonceSyncMapCacher) removeNonceFromCacheIfSyncMapIsEmpty(nonce uint64, syncMap *ShardIdHashSyncMap) {
 	isSyncMapEmpty := true
@@ -182,3 +186,5 @@ func (nspc *nonceSyncMapCacher) removeNonceFromCacheIfSyncMapIsEmpty(nonce uint6
 		nspc.cacher.Remove(nspc.nonceConverter.ToByteSlice(nonce))
 	}
 }
+=======
+>>>>>>> Stashed changes

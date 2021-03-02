@@ -24,14 +24,22 @@ func (ns *NodesSetup) ProcessMetaChainAssigment() {
 	ns.processMetaChainAssigment()
 }
 
+<<<<<<< Updated upstream
 func (ns *NodesSetup) CreateInitialNodesInfo() {
 	ns.createInitialNodesInfo()
+=======
+func (ns *NodesSetup) CreateInitialNodesPubKeys() {
+	ns.createInitialNodesPubKeys()
+>>>>>>> Stashed changes
 }
 
 func CommunicationIdentifierBetweenShards(shardId1 uint32, shardId2 uint32) string {
 	return communicationIdentifierBetweenShards(shardId1, shardId2)
 }
+<<<<<<< Updated upstream
 
 func (ihgs *indexHashedNodesCoordinator) EligibleList() []Validator {
 	return ihgs.nodesMap[ihgs.shardId]
 }
+=======
+>>>>>>> Stashed changes

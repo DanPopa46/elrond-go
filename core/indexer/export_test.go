@@ -37,13 +37,22 @@ func NewTestElasticIndexer(
 
 	es, _ := elasticsearch.NewClient(cfg)
 	indexer := elasticIndexer{es, shardCoordinator,
+<<<<<<< Updated upstream
 		marshalizer, hasher, logger, options, false}
+=======
+		marshalizer, hasher, logger, options}
+>>>>>>> Stashed changes
 
 	return ElasticIndexer{indexer}
 }
 
+<<<<<<< Updated upstream
 func (ei *ElasticIndexer) GetSerializedElasticBlockAndHeaderHash(header data.HeaderHandler, signersIndexes []uint64) ([]byte, []byte) {
 	return ei.getSerializedElasticBlockAndHeaderHash(header, signersIndexes)
+=======
+func (ei *ElasticIndexer) GetSerializedElasticBlockAndHeaderHash(header data.HeaderHandler) ([]byte, []byte) {
+	return ei.getSerializedElasticBlockAndHeaderHash(header)
+>>>>>>> Stashed changes
 }
 
 func (ei *ElasticIndexer) BuildTransactionBulks(

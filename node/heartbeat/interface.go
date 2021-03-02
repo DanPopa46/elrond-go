@@ -1,16 +1,20 @@
 package heartbeat
 
+<<<<<<< Updated upstream
 import (
 	"time"
 
 	"github.com/ElrondNetwork/elrond-go/p2p"
 )
 
+=======
+>>>>>>> Stashed changes
 // PeerMessenger defines a subset of the p2p.Messenger interface
 type PeerMessenger interface {
 	Broadcast(topic string, buff []byte)
 	IsInterfaceNil() bool
 }
+<<<<<<< Updated upstream
 
 // MessageHandler defines what a message processor for heartbeat should do
 type MessageHandler interface {
@@ -34,3 +38,5 @@ type HeartbeatStorageHandler interface {
 	SaveKeys(peersSlice [][]byte) error
 	IsInterfaceNil() bool
 }
+=======
+>>>>>>> Stashed changes

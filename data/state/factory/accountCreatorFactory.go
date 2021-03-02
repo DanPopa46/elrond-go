@@ -2,6 +2,7 @@ package factory
 
 import (
 	"github.com/ElrondNetwork/elrond-go/data/state"
+<<<<<<< Updated upstream
 )
 
 // Type defines account types to save in accounts trie
@@ -28,4 +29,24 @@ func NewAccountFactoryCreator(accountType Type) (state.AccountFactory, error) {
 	default:
 		return nil, state.ErrUnknownAccountType
 	}
+=======
+	"github.com/ElrondNetwork/elrond-go/sharding"
+)
+
+// NewAccountFactoryCreator returns an account factory depending on shard coordinator self id
+func NewAccountFactoryCreator(coordinator sharding.Coordinator) (state.AccountFactory, error) {
+	if coordinator == nil {
+		return nil, state.ErrNilShardCoordinator
+	}
+
+	if coordinator.SelfId() < coordinator.NumberOfShards() {
+		return NewAccountCreator(), nil
+	}
+
+	if coordinator.SelfId() == sharding.MetachainShardId {
+		return NewMetaAccountCreator(), nil
+	}
+
+	return nil, state.ErrUnknownShardId
+>>>>>>> Stashed changes
 }

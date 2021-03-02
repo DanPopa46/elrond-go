@@ -13,8 +13,11 @@ type ForkDetectorMock struct {
 	GetHighestFinalBlockNonceCalled         func() uint64
 	ProbableHighestNonceCalled              func() uint64
 	ResetProbableHighestNonceIfNeededCalled func()
+<<<<<<< Updated upstream
 	ResetProbableHighestNonceCalled         func()
 	ResetForcedForkCalled                   func()
+=======
+>>>>>>> Stashed changes
 }
 
 // AddHeader is a mock implementation for AddHeader
@@ -46,6 +49,7 @@ func (fdm *ForkDetectorMock) ResetProbableHighestNonceIfNeeded() {
 	fdm.ResetProbableHighestNonceIfNeededCalled()
 }
 
+<<<<<<< Updated upstream
 func (fdm *ForkDetectorMock) ResetProbableHighestNonce() {
 	fdm.ResetProbableHighestNonceCalled()
 }
@@ -54,6 +58,8 @@ func (fdm *ForkDetectorMock) ResetForcedFork() {
 	fdm.ResetForcedForkCalled()
 }
 
+=======
+>>>>>>> Stashed changes
 // IsInterfaceNil returns true if there is no value under the interface
 func (fdm *ForkDetectorMock) IsInterfaceNil() bool {
 	if fdm == nil {

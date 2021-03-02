@@ -34,6 +34,7 @@ var ErrNilAppStatusHandler = errors.New("nil AppStatusHandler")
 
 // ErrNilShardCoordinator signals that an operation has been attempted to or with a nil shard coordinator
 var ErrNilShardCoordinator = errors.New("nil shard coordinator")
+<<<<<<< Updated upstream
 
 // ErrNilTimer signals that a nil time getter handler has been provided
 var ErrNilTimer = errors.New("nil time getter handler")
@@ -58,3 +59,5 @@ var ErrUnmarshalGenesisTime = errors.New("monitor: can't unmarshal genesis time"
 
 // ErrMarshalGenesisTime signals that the marshaling of the genesis time didn't work
 var ErrMarshalGenesisTime = errors.New("monitor: can't marshal genesis time")
+=======
+>>>>>>> Stashed changes

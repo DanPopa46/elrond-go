@@ -5,10 +5,17 @@ import (
 	"testing"
 	"time"
 
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/consensus/mock"
 	"github.com/ElrondNetwork/elrond-go/consensus/spos"
 	"github.com/ElrondNetwork/elrond-go/consensus/spos/commonSubround"
 	"github.com/ElrondNetwork/elrond-go/sharding"
+=======
+	"github.com/ElrondNetwork/elrond-go/consensus"
+	"github.com/ElrondNetwork/elrond-go/consensus/mock"
+	"github.com/ElrondNetwork/elrond-go/consensus/spos"
+	"github.com/ElrondNetwork/elrond-go/consensus/spos/commonSubround"
+>>>>>>> Stashed changes
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,17 +26,26 @@ func defaultSubroundStartRoundFromSubround(sr *spos.Subround) (*commonSubround.S
 		processingThresholdPercent,
 		getSubroundName,
 		executeStoredMessages,
+<<<<<<< Updated upstream
+=======
+		broadcastUnnotarisedBlocks,
+>>>>>>> Stashed changes
 	)
 
 	return startRound, err
 }
 
+<<<<<<< Updated upstream
 func defaultSubround(
 	consensusState *spos.ConsensusState,
 	ch chan bool,
 	container spos.ConsensusCoreHandler,
 ) (*spos.Subround, error) {
 
+=======
+func defaultSubround(consensusState *spos.ConsensusState, ch chan bool, container spos.ConsensusCoreHandler) (*spos.Subround,
+	error) {
+>>>>>>> Stashed changes
 	return spos.NewSubround(
 		-1,
 		int(SrStartRound),
@@ -54,6 +70,10 @@ func initSubroundStartRoundWithContainer(container spos.ConsensusCoreHandler) *c
 		processingThresholdPercent,
 		getSubroundName,
 		executeStoredMessages,
+<<<<<<< Updated upstream
+=======
+		broadcastUnnotarisedBlocks,
+>>>>>>> Stashed changes
 	)
 
 	return srStartRound
@@ -73,6 +93,10 @@ func TestSubroundStartRound_NewSubroundStartRoundNilSubroundShouldFail(t *testin
 		processingThresholdPercent,
 		getSubroundName,
 		executeStoredMessages,
+<<<<<<< Updated upstream
+=======
+		broadcastUnnotarisedBlocks,
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, srStartRound)
@@ -127,6 +151,31 @@ func TestSubroundStartRound_NewSubroundStartRoundNilConsensusStateShouldFail(t *
 	assert.Equal(t, spos.ErrNilConsensusState, err)
 }
 
+<<<<<<< Updated upstream
+=======
+func TestSubroundStartRound_NewSubroundStartRoundNilBroadcastUnnotarisedBlocksFunctionShouldFail(t *testing.T) {
+	t.Parallel()
+
+	container := mock.InitConsensusCore()
+	consensusState := initConsensusState()
+	ch := make(chan bool, 1)
+
+	sr, _ := defaultSubround(consensusState, ch, container)
+
+	srStartRound, err := commonSubround.NewSubroundStartRound(
+		sr,
+		extend,
+		processingThresholdPercent,
+		getSubroundName,
+		executeStoredMessages,
+		nil,
+	)
+
+	assert.Nil(t, srStartRound)
+	assert.Equal(t, spos.ErrNilBroadcastUnnotarisedBlocks, err)
+}
+
+>>>>>>> Stashed changes
 func TestSubroundStartRound_NewSubroundStartRoundNilMultiSignerShouldFail(t *testing.T) {
 	t.Parallel()
 
@@ -298,9 +347,15 @@ func TestSubroundStartRound_InitCurrentRoundShouldReturnFalseWhenShouldSyncRetur
 func TestSubroundStartRound_InitCurrentRoundShouldReturnFalseWhenGenerateNextConsensusGroupErr(t *testing.T) {
 	t.Parallel()
 
+<<<<<<< Updated upstream
 	validatorGroupSelector := &mock.NodesCoordinatorMock{}
 	err := errors.New("error")
 	validatorGroupSelector.ComputeValidatorsGroupCalled = func(bytes []byte, round uint64, shardId uint32) ([]sharding.Validator, error) {
+=======
+	validatorGroupSelector := &mock.ValidatorGroupSelectorMock{}
+	err := errors.New("error")
+	validatorGroupSelector.ComputeValidatorsGroupCalled = func(bytes []byte) ([]consensus.Validator, error) {
+>>>>>>> Stashed changes
 		return nil, err
 	}
 	container := mock.InitConsensusCore()
@@ -315,6 +370,7 @@ func TestSubroundStartRound_InitCurrentRoundShouldReturnFalseWhenGenerateNextCon
 func TestSubroundStartRound_InitCurrentRoundShouldReturnFalseWhenGetLeaderErr(t *testing.T) {
 	t.Parallel()
 
+<<<<<<< Updated upstream
 	validatorGroupSelector := &mock.NodesCoordinatorMock{}
 	validatorGroupSelector.ComputeValidatorsGroupCalled = func(
 		bytes []byte,
@@ -322,6 +378,11 @@ func TestSubroundStartRound_InitCurrentRoundShouldReturnFalseWhenGetLeaderErr(t 
 		shardId uint32,
 	) ([]sharding.Validator, error) {
 		return make([]sharding.Validator, 0), nil
+=======
+	validatorGroupSelector := &mock.ValidatorGroupSelectorMock{}
+	validatorGroupSelector.ComputeValidatorsGroupCalled = func(bytes []byte) ([]consensus.Validator, error) {
+		return make([]consensus.Validator, 0), nil
+>>>>>>> Stashed changes
 	}
 
 	container := mock.InitConsensusCore()
@@ -406,6 +467,7 @@ func TestSubroundStartRound_InitCurrentRoundShouldReturnTrue(t *testing.T) {
 func TestSubroundStartRound_GenerateNextConsensusGroupShouldReturnErr(t *testing.T) {
 	t.Parallel()
 
+<<<<<<< Updated upstream
 	validatorGroupSelector := &mock.NodesCoordinatorMock{}
 
 	err := errors.New("error")
@@ -414,6 +476,12 @@ func TestSubroundStartRound_GenerateNextConsensusGroupShouldReturnErr(t *testing
 		round uint64,
 		shardId uint32,
 	) ([]sharding.Validator, error) {
+=======
+	validatorGroupSelector := &mock.ValidatorGroupSelectorMock{}
+
+	err := errors.New("error")
+	validatorGroupSelector.ComputeValidatorsGroupCalled = func(bytes []byte) ([]consensus.Validator, error) {
+>>>>>>> Stashed changes
 		return nil, err
 	}
 	container := mock.InitConsensusCore()

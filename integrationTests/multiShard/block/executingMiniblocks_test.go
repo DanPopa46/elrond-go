@@ -57,6 +57,7 @@ func TestShouldProcessBlocksInMultiShardArchitecture(t *testing.T) {
 
 	//sender shard keys, receivers  keys
 	sendersPrivateKeys := make([]crypto.PrivateKey, 3)
+<<<<<<< Updated upstream
 	receiversPublicKeys := make(map[uint32][]crypto.PublicKey)
 	for i := 0; i < txToGenerateInEachMiniBlock; i++ {
 		sendersPrivateKeys[i], _, _ = integrationTests.GenerateSkAndPkInShard(generateCoordinator, senderShard)
@@ -67,6 +68,18 @@ func TestShouldProcessBlocksInMultiShardArchitecture(t *testing.T) {
 		for _, shardId := range recvShards {
 			_, pk, _ = integrationTests.GenerateSkAndPkInShard(generateCoordinator, shardId)
 			receiversPublicKeys[shardId] = append(receiversPublicKeys[shardId], pk)
+=======
+	receiversPrivateKeys := make(map[uint32][]crypto.PrivateKey)
+	for i := 0; i < txToGenerateInEachMiniBlock; i++ {
+		sendersPrivateKeys[i], _, _ = integrationTests.GenerateSkAndPkInShard(generateCoordinator, senderShard)
+		//receivers in same shard with the sender
+		sk, _, _ := integrationTests.GenerateSkAndPkInShard(generateCoordinator, senderShard)
+		receiversPrivateKeys[senderShard] = append(receiversPrivateKeys[senderShard], sk)
+		//receivers in other shards
+		for _, shardId := range recvShards {
+			sk, _, _ = integrationTests.GenerateSkAndPkInShard(generateCoordinator, shardId)
+			receiversPrivateKeys[shardId] = append(receiversPrivateKeys[shardId], sk)
+>>>>>>> Stashed changes
 		}
 	}
 
@@ -74,6 +87,7 @@ func TestShouldProcessBlocksInMultiShardArchitecture(t *testing.T) {
 	integrationTests.CreateMintingForSenders(nodes, senderShard, sendersPrivateKeys, valMinting)
 
 	fmt.Println("Generating transactions...")
+<<<<<<< Updated upstream
 	integrationTests.GenerateAndDisseminateTxs(
 		proposerNode,
 		sendersPrivateKeys,
@@ -82,6 +96,9 @@ func TestShouldProcessBlocksInMultiShardArchitecture(t *testing.T) {
 		integrationTests.MinTxGasPrice,
 		integrationTests.MinTxGasLimit,
 	)
+=======
+	integrationTests.GenerateAndDisseminateTxs(proposerNode, sendersPrivateKeys, receiversPrivateKeys, valToTransferPerTx)
+>>>>>>> Stashed changes
 	fmt.Println("Delaying for disseminating transactions...")
 	time.Sleep(time.Second * 5)
 
@@ -92,10 +109,13 @@ func TestShouldProcessBlocksInMultiShardArchitecture(t *testing.T) {
 		round, nonce = integrationTests.ProposeAndSyncOneBlock(t, nodes, idxProposers, round, nonce)
 	}
 
+<<<<<<< Updated upstream
 	gasPricePerTxBigInt := big.NewInt(0).SetUint64(integrationTests.MinTxGasPrice)
 	gasLimitPerTxBigInt := big.NewInt(0).SetUint64(integrationTests.MinTxGasLimit)
 	gasValue := big.NewInt(0).Mul(gasPricePerTxBigInt, gasLimitPerTxBigInt)
 	totalValuePerTx := big.NewInt(0).Add(gasValue, valToTransferPerTx)
+=======
+>>>>>>> Stashed changes
 	fmt.Println("Test nodes from proposer shard to have the correct balances...")
 	for _, n := range nodes {
 		isNodeInSenderShard := n.ShardCoordinator.SelfId() == senderShard
@@ -105,13 +125,22 @@ func TestShouldProcessBlocksInMultiShardArchitecture(t *testing.T) {
 
 		//test sender balances
 		for _, sk := range sendersPrivateKeys {
+<<<<<<< Updated upstream
 			valTransferred := big.NewInt(0).Mul(totalValuePerTx, big.NewInt(int64(len(receiversPublicKeys))))
+=======
+			valTransferred := big.NewInt(0).Mul(valToTransferPerTx, big.NewInt(int64(len(receiversPrivateKeys))))
+>>>>>>> Stashed changes
 			valRemaining := big.NewInt(0).Sub(valMinting, valTransferred)
 			integrationTests.TestPrivateKeyHasBalance(t, n, sk, valRemaining)
 		}
 		//test receiver balances from same shard
+<<<<<<< Updated upstream
 		for _, pk := range receiversPublicKeys[proposerNode.ShardCoordinator.SelfId()] {
 			integrationTests.TestPublicKeyHasBalance(t, n, pk, valToTransferPerTx)
+=======
+		for _, sk := range receiversPrivateKeys[proposerNode.ShardCoordinator.SelfId()] {
+			integrationTests.TestPrivateKeyHasBalance(t, n, sk, valToTransferPerTx)
+>>>>>>> Stashed changes
 		}
 	}
 
@@ -129,8 +158,13 @@ func TestShouldProcessBlocksInMultiShardArchitecture(t *testing.T) {
 		}
 
 		//test receiver balances from same shard
+<<<<<<< Updated upstream
 		for _, pk := range receiversPublicKeys[n.ShardCoordinator.SelfId()] {
 			integrationTests.TestPublicKeyHasBalance(t, n, pk, valToTransferPerTx)
+=======
+		for _, sk := range receiversPrivateKeys[n.ShardCoordinator.SelfId()] {
+			integrationTests.TestPrivateKeyHasBalance(t, n, sk, valToTransferPerTx)
+>>>>>>> Stashed changes
 		}
 	}
 }

@@ -7,7 +7,10 @@ import (
 
 	"github.com/ElrondNetwork/elrond-go/consensus/spos"
 	"github.com/ElrondNetwork/elrond-go/core"
+<<<<<<< Updated upstream
 	"github.com/ElrondNetwork/elrond-go/core/indexer"
+=======
+>>>>>>> Stashed changes
 	"github.com/ElrondNetwork/elrond-go/core/logger"
 	"github.com/ElrondNetwork/elrond-go/statusHandler"
 )
@@ -20,9 +23,15 @@ type SubroundStartRound struct {
 	processingThresholdPercentage int
 	getSubroundName               func(subroundId int) string
 	executeStoredMessages         func()
+<<<<<<< Updated upstream
 
 	appStatusHandler core.AppStatusHandler
 	indexer          indexer.Indexer
+=======
+	broadcastUnnotarisedBlocks    func()
+
+	appStatusHandler core.AppStatusHandler
+>>>>>>> Stashed changes
 }
 
 // NewSubroundStartRound creates a SubroundStartRound object
@@ -32,9 +41,17 @@ func NewSubroundStartRound(
 	processingThresholdPercentage int,
 	getSubroundName func(subroundId int) string,
 	executeStoredMessages func(),
+<<<<<<< Updated upstream
 ) (*SubroundStartRound, error) {
 	err := checkNewSubroundStartRoundParams(
 		baseSubround,
+=======
+	broadcastUnnotarisedBlocks func(),
+) (*SubroundStartRound, error) {
+	err := checkNewSubroundStartRoundParams(
+		baseSubround,
+		broadcastUnnotarisedBlocks,
+>>>>>>> Stashed changes
 	)
 	if err != nil {
 		return nil, err
@@ -45,8 +62,13 @@ func NewSubroundStartRound(
 		processingThresholdPercentage,
 		getSubroundName,
 		executeStoredMessages,
+<<<<<<< Updated upstream
 		statusHandler.NewNilStatusHandler(),
 		indexer.NewNilIndexer(),
+=======
+		broadcastUnnotarisedBlocks,
+		statusHandler.NewNilStatusHandler(),
+>>>>>>> Stashed changes
 	}
 	srStartRound.Job = srStartRound.doStartRoundJob
 	srStartRound.Check = srStartRound.doStartRoundConsensusCheck
@@ -57,6 +79,10 @@ func NewSubroundStartRound(
 
 func checkNewSubroundStartRoundParams(
 	baseSubround *spos.Subround,
+<<<<<<< Updated upstream
+=======
+	broadcastUnnotarisedBlocks func(),
+>>>>>>> Stashed changes
 ) error {
 	if baseSubround == nil {
 		return spos.ErrNilSubround
@@ -64,6 +90,12 @@ func checkNewSubroundStartRoundParams(
 	if baseSubround.ConsensusState == nil {
 		return spos.ErrNilConsensusState
 	}
+<<<<<<< Updated upstream
+=======
+	if broadcastUnnotarisedBlocks == nil {
+		return spos.ErrNilBroadcastUnnotarisedBlocks
+	}
+>>>>>>> Stashed changes
 
 	err := spos.ValidateConsensusCore(baseSubround.ConsensusCoreHandler)
 
@@ -80,11 +112,14 @@ func (sr *SubroundStartRound) SetAppStatusHandler(ash core.AppStatusHandler) err
 	return nil
 }
 
+<<<<<<< Updated upstream
 // SetIndexer method set indexer
 func (sr *SubroundStartRound) SetIndexer(indexer indexer.Indexer) {
 	sr.indexer = indexer
 }
 
+=======
+>>>>>>> Stashed changes
 // doStartRoundJob method does the job of the subround StartRound
 func (sr *SubroundStartRound) doStartRoundJob() bool {
 	sr.ResetConsensusState()
@@ -147,8 +182,11 @@ func (sr *SubroundStartRound) initCurrentRound() bool {
 
 	pubKeys := sr.ConsensusGroup()
 
+<<<<<<< Updated upstream
 	sr.indexRoundIfNeeded(pubKeys)
 
+=======
+>>>>>>> Stashed changes
 	selfIndex, err := sr.SelfConsensusGroupIndex()
 	if err != nil {
 		log.Info(fmt.Sprintf("%scanceled round %d in subround %s, not in the consensus group\n",
@@ -187,12 +225,20 @@ func (sr *SubroundStartRound) initCurrentRound() bool {
 
 	sr.SetStatus(sr.Current(), spos.SsFinished)
 
+<<<<<<< Updated upstream
+=======
+	if leader == sr.SelfPubKey() {
+		//TODO: Should be analyzed if call of sr.broadcastUnnotarisedBlocks() is still necessary
+	}
+
+>>>>>>> Stashed changes
 	// execute stored messages which were received in this new round but before this initialisation
 	go sr.executeStoredMessages()
 
 	return true
 }
 
+<<<<<<< Updated upstream
 func (sr *SubroundStartRound) indexRoundIfNeeded(pubKeys []string) {
 	if sr.indexer == nil || sr.indexer.IsNilIndexer() {
 		return
@@ -213,6 +259,8 @@ func (sr *SubroundStartRound) indexRoundIfNeeded(pubKeys []string) {
 	go sr.indexer.SaveRoundInfo(roundInfo)
 }
 
+=======
+>>>>>>> Stashed changes
 func (sr *SubroundStartRound) generateNextConsensusGroup(roundIndex int64) error {
 	currentHeader := sr.Blockchain().GetCurrentBlockHeader()
 	if currentHeader == nil {
@@ -222,6 +270,7 @@ func (sr *SubroundStartRound) generateNextConsensusGroup(roundIndex int64) error
 		}
 	}
 
+<<<<<<< Updated upstream
 	randomSeed := currentHeader.GetRandSeed()
 
 	log.Info(fmt.Sprintf("random source used to determine the next consensus group is: %s\n",
@@ -236,10 +285,18 @@ func (sr *SubroundStartRound) generateNextConsensusGroup(roundIndex int64) error
 		shardId,
 		sr.NodesCoordinator(),
 	)
+=======
+	randomSource := fmt.Sprintf("%d-%s", roundIndex, core.ToB64(currentHeader.GetRandSeed()))
+
+	log.Info(fmt.Sprintf("random source used to determine the next consensus group is: %s\n", randomSource))
+
+	nextConsensusGroup, err := sr.GetNextConsensusGroup(randomSource, sr.ValidatorGroupSelector())
+>>>>>>> Stashed changes
 	if err != nil {
 		return err
 	}
 
+<<<<<<< Updated upstream
 	log.Debug(fmt.Sprintf("consensus group for round %d is formed by next validators:\n",
 		roundIndex))
 
@@ -253,5 +310,18 @@ func (sr *SubroundStartRound) generateNextConsensusGroup(roundIndex int64) error
 
 	sr.BlockProcessor().SetConsensusData(randomSeed, uint64(sr.RoundIndex), currentHeader.GetEpoch(), shardId)
 
+=======
+	log.Info(fmt.Sprintf("consensus group for round %d is formed by next validators:\n",
+		roundIndex))
+
+	for i := 0; i < len(nextConsensusGroup); i++ {
+		log.Info(fmt.Sprintf("%s", core.GetTrimmedPk(hex.EncodeToString([]byte(nextConsensusGroup[i])))))
+	}
+
+	log.Info(fmt.Sprintf("\n"))
+
+	sr.SetConsensusGroup(nextConsensusGroup)
+
+>>>>>>> Stashed changes
 	return nil
 }

@@ -254,8 +254,14 @@ func (messenger *Messenger) OutgoingChannelLoadBalancer() p2p.ChannelLoadBalance
 // have their ReceiveMessage() function called synchronously. The call
 // to parametricBroadcast() is done synchronously as well. This function should
 // be called as a go-routine.
+<<<<<<< Updated upstream
 func (messenger *Messenger) BroadcastOnChannelBlocking(channel string, topic string, buff []byte) error {
 	return messenger.parametricBroadcast(topic, buff, false)
+=======
+func (messenger *Messenger) BroadcastOnChannelBlocking(channel string, topic string, buff []byte) {
+	err := messenger.parametricBroadcast(topic, buff, false)
+	log.LogIfError(err)
+>>>>>>> Stashed changes
 }
 
 // BroadcastOnChannel sends the message to all peers in the network. It calls
@@ -292,11 +298,19 @@ func (messenger *Messenger) parametricBroadcast(topic string, data []byte, async
 	for _, peer := range messenger.Network.Peers() {
 		if async {
 			go func(receivingPeer *Messenger) {
+<<<<<<< Updated upstream
 				err := receivingPeer.ReceiveMessage(topic, message, true)
 				log.LogIfError(err)
 			}(peer)
 		} else {
 			err = peer.ReceiveMessage(topic, message, true)
+=======
+				err := receivingPeer.ReceiveMessage(topic, message)
+				log.LogIfError(err)
+			}(peer)
+		} else {
+			err = peer.ReceiveMessage(topic, message)
+>>>>>>> Stashed changes
 		}
 		if err != nil {
 			break
@@ -322,7 +336,11 @@ func (messenger *Messenger) SendToConnectedPeer(topic string, buff []byte, peerI
 			return ErrReceivingPeerNotConnected
 		}
 
+<<<<<<< Updated upstream
 		return receivingPeer.ReceiveMessage(topic, message, false)
+=======
+		return receivingPeer.ReceiveMessage(topic, message)
+>>>>>>> Stashed changes
 	}
 
 	return ErrNotConnectedToNetwork
@@ -333,7 +351,11 @@ func (messenger *Messenger) SendToConnectedPeer(topic string, buff []byte, peerI
 // previously registered a message processor for that topic. The Network will
 // log the message only if the Network.LogMessages flag is set and only if the
 // Messenger has the requested topic and MessageProcessor.
+<<<<<<< Updated upstream
 func (messenger *Messenger) ReceiveMessage(topic string, message p2p.MessageP2P, allowBroadcast bool) error {
+=======
+func (messenger *Messenger) ReceiveMessage(topic string, message p2p.MessageP2P) error {
+>>>>>>> Stashed changes
 	messenger.TopicsMutex.Lock()
 	validator, found := messenger.Topics[topic]
 	messenger.TopicsMutex.Unlock()
@@ -350,6 +372,7 @@ func (messenger *Messenger) ReceiveMessage(topic string, message p2p.MessageP2P,
 		messenger.Network.LogMessage(message)
 	}
 
+<<<<<<< Updated upstream
 	var handler func(buffToSend []byte)
 	if allowBroadcast {
 		handler = func(buffToSend []byte) {
@@ -358,6 +381,11 @@ func (messenger *Messenger) ReceiveMessage(topic string, message p2p.MessageP2P,
 	}
 
 	return validator.ProcessReceivedMessage(message, handler)
+=======
+	err := validator.ProcessReceivedMessage(message)
+
+	return err
+>>>>>>> Stashed changes
 }
 
 // Close disconnects this Messenger from the network it was connected to.

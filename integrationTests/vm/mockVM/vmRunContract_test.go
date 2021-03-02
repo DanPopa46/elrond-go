@@ -42,7 +42,11 @@ func TestRunSCWithoutTransferShouldRunSCCode(t *testing.T) {
 		accnts,
 	)
 
+<<<<<<< Updated upstream
 	destinationAddressBytes, _ := hex.DecodeString("0000000000000000ffff1a2983b179a480a60c4308da48f13b4480dbb4d33132")
+=======
+	destinationAddressBytes, _ := hex.DecodeString("000000000000000000001a2983b179a480a60c4308da48f13b4480dbb4d33132")
+>>>>>>> Stashed changes
 	addValue := uint64(128)
 	data := fmt.Sprintf("Add@%X", addValue)
 	//contract call tx
@@ -108,7 +112,11 @@ func TestRunSCWithTransferShouldRunSCCode(t *testing.T) {
 		accnts,
 	)
 
+<<<<<<< Updated upstream
 	destinationAddressBytes, _ := hex.DecodeString("0000000000000000ffff1a2983b179a480a60c4308da48f13b4480dbb4d33132")
+=======
+	destinationAddressBytes, _ := hex.DecodeString("000000000000000000001a2983b179a480a60c4308da48f13b4480dbb4d33132")
+>>>>>>> Stashed changes
 	addValue := uint64(128)
 	data := fmt.Sprintf("Add@%X", addValue)
 	//contract call tx
@@ -174,7 +182,11 @@ func TestRunWithTransferAndGasShouldRunSCCode(t *testing.T) {
 		accnts,
 	)
 
+<<<<<<< Updated upstream
 	destinationAddressBytes, _ := hex.DecodeString("0000000000000000ffff1a2983b179a480a60c4308da48f13b4480dbb4d33132")
+=======
+	destinationAddressBytes, _ := hex.DecodeString("000000000000000000001a2983b179a480a60c4308da48f13b4480dbb4d33132")
+>>>>>>> Stashed changes
 	addValue := uint64(128)
 	data := fmt.Sprintf("Add@%X", addValue)
 	//contract call tx
@@ -241,7 +253,11 @@ func TestRunWithTransferWithInsufficientGasShouldReturnErr(t *testing.T) {
 		accnts,
 	)
 
+<<<<<<< Updated upstream
 	destinationAddressBytes, _ := hex.DecodeString("0000000000000000ffff1a2983b179a480a60c4308da48f13b4480dbb4d33132")
+=======
+	destinationAddressBytes, _ := hex.DecodeString("000000000000000000001a2983b179a480a60c4308da48f13b4480dbb4d33132")
+>>>>>>> Stashed changes
 	addValue := uint64(128)
 	data := fmt.Sprintf("Add@%X", addValue)
 	//contract call tx

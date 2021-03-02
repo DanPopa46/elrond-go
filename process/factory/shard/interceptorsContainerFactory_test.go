@@ -17,8 +17,11 @@ import (
 
 var errExpected = errors.New("expected error")
 
+<<<<<<< Updated upstream
 const maxTxNonceDeltaAllowed = 100
 
+=======
+>>>>>>> Stashed changes
 func createStubTopicHandler(matchStrToErrOnCreate string, matchStrToErrOnRegister string) process.TopicHandler {
 	return &mock.TopicHandlerStub{
 		CreateTopicCalled: func(name string, createChannelForTopic bool) error {
@@ -67,9 +70,12 @@ func createDataPools() dataRetriever.PoolsHolder {
 	pools.UnsignedTransactionsCalled = func() dataRetriever.ShardedDataCacherNotifier {
 		return &mock.ShardedDataStub{}
 	}
+<<<<<<< Updated upstream
 	pools.RewardTransactionsCalled = func() dataRetriever.ShardedDataCacherNotifier {
 		return &mock.ShardedDataStub{}
 	}
+=======
+>>>>>>> Stashed changes
 	return pools
 }
 
@@ -88,7 +94,10 @@ func TestNewInterceptorsContainerFactory_NilAccountsAdapter(t *testing.T) {
 	icf, err := shard.NewInterceptorsContainerFactory(
 		nil,
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -98,8 +107,12 @@ func TestNewInterceptorsContainerFactory_NilAccountsAdapter(t *testing.T) {
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
@@ -112,7 +125,10 @@ func TestNewInterceptorsContainerFactory_NilShardCoordinatorShouldErr(t *testing
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		nil,
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -122,14 +138,19 @@ func TestNewInterceptorsContainerFactory_NilShardCoordinatorShouldErr(t *testing
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
 	assert.Equal(t, process.ErrNilShardCoordinator, err)
 }
 
+<<<<<<< Updated upstream
 func TestNewInterceptorsContainerFactory_NilNodesCoordinatorShouldErr(t *testing.T) {
 	t.Parallel()
 
@@ -154,13 +175,18 @@ func TestNewInterceptorsContainerFactory_NilNodesCoordinatorShouldErr(t *testing
 	assert.Equal(t, process.ErrNilNodesCoordinator, err)
 }
 
+=======
+>>>>>>> Stashed changes
 func TestNewInterceptorsContainerFactory_NilTopicHandlerShouldErr(t *testing.T) {
 	t.Parallel()
 
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		nil,
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -170,8 +196,12 @@ func TestNewInterceptorsContainerFactory_NilTopicHandlerShouldErr(t *testing.T) 
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
@@ -184,7 +214,10 @@ func TestNewInterceptorsContainerFactory_NilBlockchainShouldErr(t *testing.T) {
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		nil,
 		&mock.MarshalizerMock{},
@@ -194,8 +227,12 @@ func TestNewInterceptorsContainerFactory_NilBlockchainShouldErr(t *testing.T) {
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
@@ -208,7 +245,10 @@ func TestNewInterceptorsContainerFactory_NilMarshalizerShouldErr(t *testing.T) {
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		nil,
@@ -218,8 +258,12 @@ func TestNewInterceptorsContainerFactory_NilMarshalizerShouldErr(t *testing.T) {
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
@@ -232,7 +276,10 @@ func TestNewInterceptorsContainerFactory_NilHasherShouldErr(t *testing.T) {
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -242,8 +289,12 @@ func TestNewInterceptorsContainerFactory_NilHasherShouldErr(t *testing.T) {
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
@@ -256,7 +307,10 @@ func TestNewInterceptorsContainerFactory_NilKeyGenShouldErr(t *testing.T) {
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -266,8 +320,12 @@ func TestNewInterceptorsContainerFactory_NilKeyGenShouldErr(t *testing.T) {
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
@@ -280,7 +338,10 @@ func TestNewInterceptorsContainerFactory_NilSingleSignerShouldErr(t *testing.T) 
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -290,8 +351,12 @@ func TestNewInterceptorsContainerFactory_NilSingleSignerShouldErr(t *testing.T) 
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
@@ -304,7 +369,10 @@ func TestNewInterceptorsContainerFactory_NilMultiSignerShouldErr(t *testing.T) {
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -314,8 +382,12 @@ func TestNewInterceptorsContainerFactory_NilMultiSignerShouldErr(t *testing.T) {
 		nil,
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
@@ -328,7 +400,10 @@ func TestNewInterceptorsContainerFactory_NilDataPoolShouldErr(t *testing.T) {
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -338,8 +413,12 @@ func TestNewInterceptorsContainerFactory_NilDataPoolShouldErr(t *testing.T) {
 		mock.NewMultiSigner(),
 		nil,
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
@@ -352,7 +431,10 @@ func TestNewInterceptorsContainerFactory_NilAddrConverterShouldErr(t *testing.T)
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -362,21 +444,32 @@ func TestNewInterceptorsContainerFactory_NilAddrConverterShouldErr(t *testing.T)
 		mock.NewMultiSigner(),
 		createDataPools(),
 		nil,
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	assert.Nil(t, icf)
 	assert.Equal(t, process.ErrNilAddressConverter, err)
 }
 
+<<<<<<< Updated upstream
 func TestNewInterceptorsContainerFactory_NilTxFeeHandlerShouldErr(t *testing.T) {
+=======
+func TestNewInterceptorsContainerFactory_ShouldWork(t *testing.T) {
+>>>>>>> Stashed changes
 	t.Parallel()
 
 	icf, err := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{},
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -386,6 +479,7 @@ func TestNewInterceptorsContainerFactory_NilTxFeeHandlerShouldErr(t *testing.T) 
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		nil,
 	)
@@ -402,16 +496,8 @@ func TestNewInterceptorsContainerFactory_ShouldWork(t *testing.T) {
 		mock.NewOneShardCoordinatorMock(),
 		mock.NewNodesCoordinatorMock(),
 		&mock.TopicHandlerStub{},
-		createStore(),
-		&mock.MarshalizerMock{},
-		&mock.HasherMock{},
-		&mock.SingleSignKeyGenMock{},
-		&mock.SignerMock{},
-		mock.NewMultiSigner(),
-		createDataPools(),
-		&mock.AddressConverterMock{},
-		maxTxNonceDeltaAllowed,
-		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
 	)
 
 	assert.NotNil(t, icf)
@@ -426,8 +512,8 @@ func TestInterceptorsContainerFactory_CreateTopicCreationTxFailsShouldErr(t *tes
 	icf, _ := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
-		mock.NewNodesCoordinatorMock(),
 		createStubTopicHandler(factory.TransactionTopic, ""),
+>>>>>>> Stashed changes
 		createStore(),
 		&mock.MarshalizerMock{},
 		&mock.HasherMock{},
@@ -436,8 +522,20 @@ func TestInterceptorsContainerFactory_CreateTopicCreationTxFailsShouldErr(t *tes
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+	)
+
+	assert.NotNil(t, icf)
+	assert.Nil(t, err)
+}
+
+//------- Create
+
+func TestInterceptorsContainerFactory_CreateTopicCreationTxFailsShouldErr(t *testing.T) {
+=======
+		&mock.ChronologyValidatorStub{},
 	)
 
 	container, err := icf.Create()
@@ -447,13 +545,18 @@ func TestInterceptorsContainerFactory_CreateTopicCreationTxFailsShouldErr(t *tes
 }
 
 func TestInterceptorsContainerFactory_CreateTopicCreationHdrFailsShouldErr(t *testing.T) {
+>>>>>>> Stashed changes
 	t.Parallel()
 
 	icf, _ := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+		createStubTopicHandler(factory.TransactionTopic, ""),
+=======
 		createStubTopicHandler(factory.HeadersTopic, ""),
+>>>>>>> Stashed changes
 		createStore(),
 		&mock.MarshalizerMock{},
 		&mock.HasherMock{},
@@ -462,8 +565,12 @@ func TestInterceptorsContainerFactory_CreateTopicCreationHdrFailsShouldErr(t *te
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	container, err := icf.Create()
@@ -472,14 +579,22 @@ func TestInterceptorsContainerFactory_CreateTopicCreationHdrFailsShouldErr(t *te
 	assert.Equal(t, errExpected, err)
 }
 
+<<<<<<< Updated upstream
+func TestInterceptorsContainerFactory_CreateTopicCreationHdrFailsShouldErr(t *testing.T) {
+=======
 func TestInterceptorsContainerFactory_CreateTopicCreationMiniBlocksFailsShouldErr(t *testing.T) {
+>>>>>>> Stashed changes
 	t.Parallel()
 
 	icf, _ := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+		createStubTopicHandler(factory.HeadersTopic, ""),
+=======
 		createStubTopicHandler(factory.MiniBlocksTopic, ""),
+>>>>>>> Stashed changes
 		createStore(),
 		&mock.MarshalizerMock{},
 		&mock.HasherMock{},
@@ -488,8 +603,50 @@ func TestInterceptorsContainerFactory_CreateTopicCreationMiniBlocksFailsShouldEr
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
+	)
+
+	container, err := icf.Create()
+
+	assert.Nil(t, container)
+	assert.Equal(t, errExpected, err)
+}
+
+<<<<<<< Updated upstream
+func TestInterceptorsContainerFactory_CreateTopicCreationMiniBlocksFailsShouldErr(t *testing.T) {
+=======
+func TestInterceptorsContainerFactory_CreateTopicCreationPeerChBlocksFailsShouldErr(t *testing.T) {
+>>>>>>> Stashed changes
+	t.Parallel()
+
+	icf, _ := shard.NewInterceptorsContainerFactory(
+		&mock.AccountsStub{},
+		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
+		mock.NewNodesCoordinatorMock(),
+		createStubTopicHandler(factory.MiniBlocksTopic, ""),
+=======
+		createStubTopicHandler(factory.PeerChBodyTopic, ""),
+>>>>>>> Stashed changes
+		createStore(),
+		&mock.MarshalizerMock{},
+		&mock.HasherMock{},
+		&mock.SingleSignKeyGenMock{},
+		&mock.SignerMock{},
+		mock.NewMultiSigner(),
+		createDataPools(),
+		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
+		maxTxNonceDeltaAllowed,
+		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	container, err := icf.Create()
@@ -504,7 +661,10 @@ func TestInterceptorsContainerFactory_CreateTopicCreationMetachainHeadersFailsSh
 	icf, _ := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		createStubTopicHandler(factory.MetachainBlocksTopic, ""),
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -514,8 +674,12 @@ func TestInterceptorsContainerFactory_CreateTopicCreationMetachainHeadersFailsSh
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	container, err := icf.Create()
@@ -530,7 +694,10 @@ func TestInterceptorsContainerFactory_CreateRegisterTxFailsShouldErr(t *testing.
 	icf, _ := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		createStubTopicHandler("", factory.TransactionTopic),
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -540,8 +707,12 @@ func TestInterceptorsContainerFactory_CreateRegisterTxFailsShouldErr(t *testing.
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	container, err := icf.Create()
@@ -556,7 +727,10 @@ func TestInterceptorsContainerFactory_CreateRegisterHdrFailsShouldErr(t *testing
 	icf, _ := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		createStubTopicHandler("", factory.HeadersTopic),
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -566,8 +740,12 @@ func TestInterceptorsContainerFactory_CreateRegisterHdrFailsShouldErr(t *testing
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	container, err := icf.Create()
@@ -582,7 +760,10 @@ func TestInterceptorsContainerFactory_CreateRegisterMiniBlocksFailsShouldErr(t *
 	icf, _ := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		createStubTopicHandler("", factory.MiniBlocksTopic),
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -592,8 +773,36 @@ func TestInterceptorsContainerFactory_CreateRegisterMiniBlocksFailsShouldErr(t *
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+	)
+
+	container, err := icf.Create()
+
+	assert.Nil(t, container)
+	assert.Equal(t, errExpected, err)
+}
+
+func TestInterceptorsContainerFactory_CreateRegisterPeerChBlocksFailsShouldErr(t *testing.T) {
+	t.Parallel()
+
+	icf, _ := shard.NewInterceptorsContainerFactory(
+		&mock.AccountsStub{},
+		mock.NewOneShardCoordinatorMock(),
+		createStubTopicHandler("", factory.PeerChBodyTopic),
+		createStore(),
+		&mock.MarshalizerMock{},
+		&mock.HasherMock{},
+		&mock.SingleSignKeyGenMock{},
+		&mock.SignerMock{},
+		mock.NewMultiSigner(),
+		createDataPools(),
+		&mock.AddressConverterMock{},
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	container, err := icf.Create()
@@ -608,7 +817,10 @@ func TestInterceptorsContainerFactory_CreateRegisterMetachainHeadersShouldErr(t 
 	icf, _ := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		createStubTopicHandler("", factory.MetachainBlocksTopic),
 		createStore(),
 		&mock.MarshalizerMock{},
@@ -618,8 +830,12 @@ func TestInterceptorsContainerFactory_CreateRegisterMetachainHeadersShouldErr(t 
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	container, err := icf.Create()
@@ -634,7 +850,10 @@ func TestInterceptorsContainerFactory_CreateShouldWork(t *testing.T) {
 	icf, _ := shard.NewInterceptorsContainerFactory(
 		&mock.AccountsStub{},
 		mock.NewOneShardCoordinatorMock(),
+<<<<<<< Updated upstream
 		mock.NewNodesCoordinatorMock(),
+=======
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{
 			CreateTopicCalled: func(name string, createChannelForTopic bool) error {
 				return nil
@@ -651,8 +870,12 @@ func TestInterceptorsContainerFactory_CreateShouldWork(t *testing.T) {
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
+=======
+		&mock.ChronologyValidatorStub{},
+>>>>>>> Stashed changes
 	)
 
 	container, err := icf.Create()
@@ -670,6 +893,7 @@ func TestInterceptorsContainerFactory_With4ShardsShouldWork(t *testing.T) {
 	shardCoordinator.SetNoShards(uint32(noOfShards))
 	shardCoordinator.CurrentShard = 1
 
+<<<<<<< Updated upstream
 	nodesCoordinator := &mock.NodesCoordinatorMock{
 		ShardId:            1,
 		ShardConsensusSize: 1,
@@ -681,6 +905,11 @@ func TestInterceptorsContainerFactory_With4ShardsShouldWork(t *testing.T) {
 		&mock.AccountsStub{},
 		shardCoordinator,
 		nodesCoordinator,
+=======
+	icf, _ := shard.NewInterceptorsContainerFactory(
+		&mock.AccountsStub{},
+		shardCoordinator,
+>>>>>>> Stashed changes
 		&mock.TopicHandlerStub{
 			CreateTopicCalled: func(name string, createChannelForTopic bool) error {
 				return nil
@@ -697,6 +926,7 @@ func TestInterceptorsContainerFactory_With4ShardsShouldWork(t *testing.T) {
 		mock.NewMultiSigner(),
 		createDataPools(),
 		&mock.AddressConverterMock{},
+<<<<<<< Updated upstream
 		maxTxNonceDeltaAllowed,
 		&mock.FeeHandlerStub{},
 	)
@@ -713,5 +943,20 @@ func TestInterceptorsContainerFactory_With4ShardsShouldWork(t *testing.T) {
 		numInterceptorHeaders + numInterceptorMiniBlocks + numInterceptorMetachainHeaders
 
 	assert.Nil(t, err)
+=======
+		&mock.ChronologyValidatorStub{},
+	)
+
+	container, _ := icf.Create()
+
+	numInterceptorTxs := noOfShards + 1
+	numInterceptorHeaders := 1
+	numInterceptorMiniBlocks := noOfShards
+	numInterceptorPeerChanges := 1
+	numInterceptorMetachainHeaders := 1
+	totalInterceptors := numInterceptorTxs + numInterceptorHeaders + numInterceptorMiniBlocks +
+		numInterceptorPeerChanges + numInterceptorMetachainHeaders + numInterceptorTxs
+
+>>>>>>> Stashed changes
 	assert.Equal(t, totalInterceptors, container.Len())
 }

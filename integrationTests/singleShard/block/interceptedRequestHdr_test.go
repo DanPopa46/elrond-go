@@ -69,7 +69,11 @@ func TestNode_GenerateSendInterceptHeaderByNonceWithNetMessenger(t *testing.T) {
 	}
 
 	hdr2 := block.Header{
+<<<<<<< Updated upstream
 		Nonce:            0,
+=======
+		Nonce:            1,
+>>>>>>> Stashed changes
 		PubKeysBitmap:    []byte{255, 0},
 		Signature:        []byte("signature"),
 		PrevHash:         []byte("prev hash"),

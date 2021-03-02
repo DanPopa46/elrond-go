@@ -22,7 +22,10 @@ type resolversContainerFactory struct {
 	dataPools                dataRetriever.MetaPoolsHolder
 	uint64ByteSliceConverter typeConverters.Uint64ByteSliceConverter
 	intRandomizer            dataRetriever.IntRandomizer
+<<<<<<< Updated upstream
 	dataPacker               dataRetriever.DataPacker
+=======
+>>>>>>> Stashed changes
 }
 
 // NewResolversContainerFactory creates a new container filled with topic resolvers
@@ -33,7 +36,10 @@ func NewResolversContainerFactory(
 	marshalizer marshal.Marshalizer,
 	dataPools dataRetriever.MetaPoolsHolder,
 	uint64ByteSliceConverter typeConverters.Uint64ByteSliceConverter,
+<<<<<<< Updated upstream
 	dataPacker dataRetriever.DataPacker,
+=======
+>>>>>>> Stashed changes
 ) (*resolversContainerFactory, error) {
 
 	if shardCoordinator == nil || shardCoordinator.IsInterfaceNil() {
@@ -54,9 +60,12 @@ func NewResolversContainerFactory(
 	if uint64ByteSliceConverter == nil || uint64ByteSliceConverter.IsInterfaceNil() {
 		return nil, dataRetriever.ErrNilUint64ByteSliceConverter
 	}
+<<<<<<< Updated upstream
 	if dataPacker == nil || dataPacker.IsInterfaceNil() {
 		return nil, dataRetriever.ErrNilDataPacker
 	}
+=======
+>>>>>>> Stashed changes
 
 	return &resolversContainerFactory{
 		shardCoordinator:         shardCoordinator,
@@ -66,7 +75,10 @@ func NewResolversContainerFactory(
 		dataPools:                dataPools,
 		uint64ByteSliceConverter: uint64ByteSliceConverter,
 		intRandomizer:            &random.ConcurrentSafeIntRandomizer{},
+<<<<<<< Updated upstream
 		dataPacker:               dataPacker,
+=======
+>>>>>>> Stashed changes
 	}, nil
 }
 
@@ -84,14 +96,18 @@ func (rcf *resolversContainerFactory) Create() (dataRetriever.ResolversContainer
 	}
 
 	metaKeys, metaInterceptorSlice, err := rcf.generateMetaChainHeaderResolvers()
+<<<<<<< Updated upstream
 	if err != nil {
 		return nil, err
 	}
+=======
+>>>>>>> Stashed changes
 	err = container.AddMultiple(metaKeys, metaInterceptorSlice)
 	if err != nil {
 		return nil, err
 	}
 
+<<<<<<< Updated upstream
 	keys, resolverSlice, err := rcf.generateTxResolvers(
 		factory.TransactionTopic,
 		dataRetriever.TransactionUnit,
@@ -127,6 +143,8 @@ func (rcf *resolversContainerFactory) Create() (dataRetriever.ResolversContainer
 		return nil, err
 	}
 
+=======
+>>>>>>> Stashed changes
 	return container, nil
 }
 
@@ -248,7 +266,11 @@ func (rcf *resolversContainerFactory) createMetaChainHeaderResolver(identifier s
 	hdrNonceStore := rcf.store.GetStorer(dataRetriever.MetaHdrNonceHashDataUnit)
 	resolver, err := resolvers.NewHeaderResolver(
 		resolverSender,
+<<<<<<< Updated upstream
 		rcf.dataPools.MetaBlocks(),
+=======
+		rcf.dataPools.MetaChainBlocks(),
+>>>>>>> Stashed changes
 		rcf.dataPools.HeadersNonces(),
 		hdrStorer,
 		hdrNonceStore,
@@ -266,6 +288,7 @@ func (rcf *resolversContainerFactory) createMetaChainHeaderResolver(identifier s
 		false)
 }
 
+<<<<<<< Updated upstream
 //------- Tx resolvers
 
 func (rcf *resolversContainerFactory) generateTxResolvers(
@@ -426,6 +449,8 @@ func (rcf *resolversContainerFactory) createOneResolverSender(
 	return resolverSender, nil
 }
 
+=======
+>>>>>>> Stashed changes
 // IsInterfaceNil returns true if there is no value under the interface
 func (rcf *resolversContainerFactory) IsInterfaceNil() bool {
 	if rcf == nil {

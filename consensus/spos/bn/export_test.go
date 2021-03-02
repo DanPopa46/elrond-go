@@ -60,8 +60,13 @@ func (fct *factory) SyncTimer() ntp.SyncTimer {
 	return fct.consensusCore.SyncTimer()
 }
 
+<<<<<<< Updated upstream
 func (fct *factory) NodesCoordinator() sharding.NodesCoordinator {
 	return fct.consensusCore.NodesCoordinator()
+=======
+func (fct *factory) ValidatorGroupSelector() consensus.ValidatorGroupSelector {
+	return fct.consensusCore.ValidatorGroupSelector()
+>>>>>>> Stashed changes
 }
 
 func (fct *factory) Worker() spos.WorkerHandler {
